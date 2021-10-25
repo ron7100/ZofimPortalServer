@@ -12,15 +12,15 @@ namespace ZofimPortalServerBL.Models
             Cadets = new HashSet<Cadet>();
         }
 
-        public string UName { get; set; }
-        public string Pass { get; set; }
         public string FName { get; set; }
         public string LName { get; set; }
         public int PersonalId { get; set; }
         public int ShevetId { get; set; }
+        public int UserId { get; set; }
         public int Id { get; set; }
 
         public virtual Shevet Shevet { get; set; }
+        public virtual User User { get; set; }
         public virtual ICollection<Cadet> Cadets { get; set; }
     }
 }

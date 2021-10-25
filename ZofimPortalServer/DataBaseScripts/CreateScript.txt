@@ -1,7 +1,7 @@
 ﻿USE [master]
 GO
 
-/****** Object:  Database [ZofimPortalDB]    Script Date: 25/10/2021 13:03:12 ******/
+/****** Object:  Database [ZofimPortalDB]    Script Date: 25/10/2021 13:37:12 ******/
 CREATE DATABASE [ZofimPortalDB]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -108,5 +108,221 @@ ALTER DATABASE [ZofimPortalDB] SET QUERY_STORE = OFF
 GO
 
 ALTER DATABASE [ZofimPortalDB] SET  READ_WRITE 
+GO
+
+USE [ZofimPortalDB]
+GO
+
+/****** Object:  Table [dbo].[Hanhaga]    Script Date: 25/10/2021 13:37:32 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Hanhaga](
+	[Name] [nvarchar](50) NOT NULL,
+	[ShevetNumber] [int] NOT NULL,
+	[GeneralArea] [nvarchar](50) NOT NULL,
+	[ID] [int] NOT NULL,
+ CONSTRAINT [PK_Hanhaga] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Hanhaga]  WITH CHECK ADD  CONSTRAINT [FK_Hanhaga_Hanhaga] FOREIGN KEY([ID])
+REFERENCES [dbo].[Hanhaga] ([ID])
+GO
+
+ALTER TABLE [dbo].[Hanhaga] CHECK CONSTRAINT [FK_Hanhaga_Hanhaga]
+GO
+
+USE [ZofimPortalDB]
+GO
+
+/****** Object:  Table [dbo].[Shevet]    Script Date: 25/10/2021 13:37:48 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Shevet](
+	[Name] [nvarchar](50) NOT NULL,
+	[HanhagaID] [int] NOT NULL,
+	[MembersAmount] [int] NOT NULL,
+	[ID] [int] NOT NULL,
+ CONSTRAINT [PK_Shevet] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Shevet]  WITH CHECK ADD  CONSTRAINT [FK_Shevet_Hanhaga] FOREIGN KEY([HanhagaID])
+REFERENCES [dbo].[Hanhaga] ([ID])
+GO
+
+ALTER TABLE [dbo].[Shevet] CHECK CONSTRAINT [FK_Shevet_Hanhaga]
+GO
+
+USE [ZofimPortalDB]
+GO
+
+/****** Object:  Table [dbo].[User]    Script Date: 25/10/2021 13:41:47 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[User](
+	[username] [nvarchar](50) NOT NULL,
+	[password] [nvarchar](50) NOT NULL,
+	[userType] [nvarchar](10) NOT NULL,
+	[ID] [int] NOT NULL
+	CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+USE [ZofimPortalDB]
+GO
+
+/****** Object:  Table [dbo].[Parent]    Script Date: 25/10/2021 13:42:00 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Parent](
+	[fName] [nvarchar](50) NOT NULL,
+	[lName] [nvarchar](50) NOT NULL,
+	[personalID] [nvarchar](50) NOT NULL,
+	[ShevetID] [int] NOT NULL,
+	[UserID] [int] NOT NULL,
+	[ID] [int] NOT NULL,
+ CONSTRAINT [PK_Parent] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Parent]  WITH CHECK ADD  CONSTRAINT [FK_Parent_Shevet] FOREIGN KEY([ShevetID])
+REFERENCES [dbo].[Shevet] ([ID])
+GO
+
+ALTER TABLE [dbo].[Parent] CHECK CONSTRAINT [FK_Parent_Shevet]
+GO
+
+ALTER TABLE [dbo].[Parent]  WITH CHECK ADD  CONSTRAINT [FK_Parent_User] FOREIGN KEY([UserID])
+REFERENCES [dbo].[User] ([ID])
+GO
+
+ALTER TABLE [dbo].[Parent] CHECK CONSTRAINT [FK_Parent_User]
+GO
+
+
+USE [ZofimPortalDB]
+GO
+
+/****** Object:  Table [dbo].[Worker]    Script Date: 25/10/2021 13:42:10 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Worker](
+	[fName] [nvarchar](50) NOT NULL,
+	[lName] [nvarchar](50) NOT NULL,
+	[PersonalID] [nvarchar](50) NOT NULL,
+	[ShevetID] [int] NULL,
+	[Role] [nvarchar](50) NOT NULL,
+	[HanhagaID] [int] NOT NULL,
+	[UserID] [int] NOT NULL,
+	[ID] [int] NOT NULL,
+ CONSTRAINT [PK_Worker] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Worker]  WITH CHECK ADD  CONSTRAINT [FK_Worker_Hanhaga] FOREIGN KEY([HanhagaID])
+REFERENCES [dbo].[Hanhaga] ([ID])
+GO
+
+ALTER TABLE [dbo].[Worker] CHECK CONSTRAINT [FK_Worker_Hanhaga]
+GO
+
+ALTER TABLE [dbo].[Worker]  WITH CHECK ADD  CONSTRAINT [FK_Worker_Shevet] FOREIGN KEY([ShevetID])
+REFERENCES [dbo].[Shevet] ([ID])
+GO
+
+ALTER TABLE [dbo].[Worker] CHECK CONSTRAINT [FK_Worker_Shevet]
+GO
+
+ALTER TABLE [dbo].[Worker]  WITH CHECK ADD  CONSTRAINT [FK_Worker_User] FOREIGN KEY([UserID])
+REFERENCES [dbo].[User] ([ID])
+GO
+
+ALTER TABLE [dbo].[Worker] CHECK CONSTRAINT [FK_Worker_User]
+GO
+
+
+
+
+USE [ZofimPortalDB]
+GO
+
+/****** Object:  Table [dbo].[Cadet]    Script Date: 25/10/2021 13:37:19 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Cadet](
+	[fName] [nvarchar](50) NOT NULL,
+	[lName] [nvarchar](50) NOT NULL,
+	[PersonalID] [nvarchar](50) NOT NULL,
+	[ParentID] [int] NOT NULL,
+	[ShevetID] [int] NOT NULL,
+	[Role] [nvarchar](50) NOT NULL,
+	[UserID] [int] NOT NULL,
+	[ID] [int] NOT NULL,
+ CONSTRAINT [PK_Cadet] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Cadet]  WITH CHECK ADD  CONSTRAINT [FK_Cadet_Parent] FOREIGN KEY([ParentID])
+REFERENCES [dbo].[Parent] ([ID])
+GO
+
+ALTER TABLE [dbo].[Cadet] CHECK CONSTRAINT [FK_Cadet_Parent]
+GO
+
+ALTER TABLE [dbo].[Cadet]  WITH CHECK ADD  CONSTRAINT [FK_Cadet_Shevet] FOREIGN KEY([ShevetID])
+REFERENCES [dbo].[Shevet] ([ID])
+GO
+
+ALTER TABLE [dbo].[Cadet] CHECK CONSTRAINT [FK_Cadet_Shevet]
+GO
+
+ALTER TABLE [dbo].[Cadet]  WITH CHECK ADD  CONSTRAINT [FK_Cadet_User] FOREIGN KEY([UserID])
+REFERENCES [dbo].[User] ([ID])
+GO
+
+ALTER TABLE [dbo].[Cadet] CHECK CONSTRAINT [FK_Cadet_User]
 GO
 
