@@ -10,7 +10,7 @@ namespace ZofimPortalServer.Controllers
 {
     [Route("ZofimPortalAPI")]
     [ApiController]
-    public class BackGammonController : ControllerBase
+    public class ZController : ControllerBase
     {
         ZofimPortalDBContext context;
         public BackGammonController(ZofimPortalDBContext context)
