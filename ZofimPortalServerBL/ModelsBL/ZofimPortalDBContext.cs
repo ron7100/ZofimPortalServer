@@ -10,11 +10,18 @@ namespace ZofimPortalServerBL.Models
 {
     public partial class ZofimPortalDBContext:DbContext
     {
-        public User Login(string uName, string pass)
-        {
+        //public User Login(string uName, string pass)
+        //{
 
-        }
+        //}
         //שלוש פעולות שונות שמנסות לחבר לכל סוג של משתמש, שתיים ייכשלו ורק הסוג הנכון יצליח
         //פעולה אחת שמחזירה אובייקט ובודקת לפי המשתמש איזה סוג אובייקט זה
+        
+        Public Object Login(string uName, string pass)
+        {
+            
+            Object user = this.Users.Where(u => u.user.username == uName && u.user.password == pass).FirstOrDefault();
+        } 
+        
     }
 }

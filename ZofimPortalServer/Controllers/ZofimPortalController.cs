@@ -15,7 +15,7 @@ namespace ZofimPortalServer.Controllers
         }
         #endregion
 
-        [Route("Login")]
+        /*[Route("Login")]
         [HttpGet]
         public User Login([FromQuery] string email, [FromQuery] string pass)
         {
@@ -37,6 +37,6 @@ namespace ZofimPortalServer.Controllers
                 Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                 return null;
             }
-        }
+        }*/
     }
 }
