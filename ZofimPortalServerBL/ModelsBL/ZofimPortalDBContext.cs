@@ -22,12 +22,12 @@ namespace ZofimPortalServerBL.Models
             #endregion
 
             #region מציאת סוג המשתמש
-            object objToReturn = this.Workers.Where(w => w.UserId == user.Id).FirstOrDefault();
+            object objToReturn = this.Workers.Where(w => w.UserId == user.Id).Include(w=>w.Shevet).ThenInclude(w=>w.Hanhaga).FirstOrDefault();
             if(objToReturn==null)//בודק האם המשתמש הוא עובד
             {
-                objToReturn = this.Parents.Where(p => p.UserId == user.Id).FirstOrDefault();
+                objToReturn = this.Parents.Where(p => p.UserId == user.Id).Include(p => p.Shevet).ThenInclude(p => p.Hanhaga).FirstOrDefault();
                 if (objToReturn == null)//בודק האם המשתמש הוא הורה
-                    objToReturn = this.Cadets.Where(c => c.UserId == user.Id).FirstOrDefault();
+                    objToReturn = this.Cadets.Where(c => c.UserId == user.Id).Include(c => c.Shevet).ThenInclude(c => c.Hanhaga).FirstOrDefault();
                     //אם המשתמש לא עובד ולא הורה, אז המשתמש הוא חניך
             }
             return objToReturn;//מחזיר את המשתמש בתור הסוג של המשתמש

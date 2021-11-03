@@ -18,7 +18,6 @@ namespace ZofimPortalServer.Controllers
         [Route("Login")]
         [HttpGet]
         public object Login([FromQuery] string uName, [FromQuery] string pass)
-        #warning יכול להישאר אובג'קט?
         {
             object user = context.Login(uName, pass);
 
