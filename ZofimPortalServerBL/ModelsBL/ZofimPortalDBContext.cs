@@ -10,18 +10,28 @@ namespace ZofimPortalServerBL.Models
 {
     public partial class ZofimPortalDBContext:DbContext
     {
-        //public User Login(string uName, string pass)
-        //{
-
-        //}
         //שלוש פעולות שונות שמנסות לחבר לכל סוג של משתמש, שתיים ייכשלו ורק הסוג הנכון יצליח
         //פעולה אחת שמחזירה אובייקט ובודקת לפי המשתמש איזה סוג אובייקט זה
         
-        Public Object Login(string uName, string pass)
+        public Object Login(string uName, string pass)
         {
-            
-            Object user = this.Users.Where(u => u.user.username == uName && u.user.password == pass).FirstOrDefault();
-        } 
-        
-    }
+            #region האם המשתמש קיים
+            User user = this.Users.Where(u => u.Username == uName && u.Password == pass).FirstOrDefault();
+            if (user == null)
+                return null;//במקום בו קוראים לפעולה בודקים אם האובייקט שחזר ריק. אם כן, ההתחברות נכשלה
+            #endregion
+
+            #region מציאת סוג המשתמש
+            object objToReturn = this.Workers.Where(w => w.UserId == user.Id).FirstOrDefault();
+            if(objToReturn==null)//בודק האם המשתמש הוא עובד
+            {
+                objToReturn = this.Parents.Where(p => p.UserId == user.Id).FirstOrDefault();
+                if (objToReturn == null)//בודק האם המשתמש הוא הורה
+                    objToReturn = this.Cadets.Where(c => c.UserId == user.Id).FirstOrDefault();
+                    //אם המשתמש לא עובד ולא הורה, אז המשתמש הוא חניך
+            }
+            return objToReturn;//מחזיר את המשתמש בתור הסוג של המשתמש
+            #endregion
+        }
+    }         
 }

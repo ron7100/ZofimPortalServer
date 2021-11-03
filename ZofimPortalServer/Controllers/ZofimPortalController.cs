@@ -15,28 +15,27 @@ namespace ZofimPortalServer.Controllers
         }
         #endregion
 
-        /*[Route("Login")]
+        [Route("Login")]
         [HttpGet]
-        public User Login([FromQuery] string email, [FromQuery] string pass)
+        public object Login([FromQuery] string uName, [FromQuery] string pass)
+        #warning יכול להישאר אובג'קט?
         {
-            User user = context.Login(email, pass);
+            object user = context.Login(uName, pass);
 
-            //Check user name and password
-            if (user != null)
+            if (user != null) //בודק האם ההתחברות הצליחה
             {
                 HttpContext.Session.SetObject("theUser", user);
 
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
 
-                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                //Important! Due to the Lazy Loading, the user will be returned with all of its contents!!
                 return user;
             }
-            else
+            else //אם לא הצליח להתחבר
             {
-
                 Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                 return null;
             }
-        }*/
+        }
     }
 }

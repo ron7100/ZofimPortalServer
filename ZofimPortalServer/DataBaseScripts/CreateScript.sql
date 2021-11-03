@@ -182,7 +182,6 @@ GO
 CREATE TABLE [dbo].[User](
 	[username] [nvarchar](50) NOT NULL,
 	[password] [nvarchar](50) NOT NULL,
-	[userType] [nvarchar](10) NOT NULL,
 	[ID] [int] NOT NULL,
  CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
 (
