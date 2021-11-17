@@ -36,5 +36,9 @@ namespace ZofimPortalServer.Controllers
                 return null;
             }
         }
+        public bool IsUserExist([FromQuery] string uName)
+        {
+            return context.IsUserExist(uName);
+        }
     }
 }

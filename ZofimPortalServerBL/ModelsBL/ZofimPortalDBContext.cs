@@ -33,5 +33,10 @@ namespace ZofimPortalServerBL.Models
             return objToReturn;//מחזיר את המשתמש בתור הסוג של המשתמש
             #endregion
         }
+        public bool IsUserExist(string uName)
+        {
+            User user = this.Users.Where(u => u.Username == uName).FirstOrDefault();
+            return user != null;
+        }
     }         
 }
