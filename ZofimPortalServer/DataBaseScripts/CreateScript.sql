@@ -278,6 +278,26 @@ GO
 USE [ZofimPortalDB]
 GO
 
+/****** Object:  Table [dbo].[Role]    Script Date: 21/11/2021 08:29:47 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Role](
+	[RoleName] [nvarchar](50) NOT NULL,
+	[ID] [int] NOT NULL,
+ CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+USE [ZofimPortalDB]
+GO
+
 /****** Object:  Table [dbo].[Cadet]    Script Date: 31/10/2021 08:48:03 ******/
 SET ANSI_NULLS ON
 GO
@@ -289,9 +309,8 @@ CREATE TABLE [dbo].[Cadet](
 	[fName] [nvarchar](50) NOT NULL,
 	[lName] [nvarchar](50) NOT NULL,
 	[PersonalID] [nvarchar](50) NOT NULL,
-	[ParentID] [int] NOT NULL,
 	[ShevetID] [int] NOT NULL,
-	[Role] [nvarchar](50) NOT NULL,
+	[RoleID] [int] NOT NULL,
 	[UserID] [int] NOT NULL,
 	[ID] [int] NOT NULL,
  CONSTRAINT [PK_Cadet] PRIMARY KEY CLUSTERED 
@@ -299,13 +318,6 @@ CREATE TABLE [dbo].[Cadet](
 	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
-GO
-
-ALTER TABLE [dbo].[Cadet]  WITH CHECK ADD  CONSTRAINT [FK_Cadet_Parent] FOREIGN KEY([ParentID])
-REFERENCES [dbo].[Parent] ([ID])
-GO
-
-ALTER TABLE [dbo].[Cadet] CHECK CONSTRAINT [FK_Cadet_Parent]
 GO
 
 ALTER TABLE [dbo].[Cadet]  WITH CHECK ADD  CONSTRAINT [FK_Cadet_Shevet] FOREIGN KEY([ShevetID])
@@ -320,6 +332,13 @@ REFERENCES [dbo].[User] ([ID])
 GO
 
 ALTER TABLE [dbo].[Cadet] CHECK CONSTRAINT [FK_Cadet_User]
+GO
+
+ALTER TABLE [dbo].[Cadet]  WITH CHECK ADD  CONSTRAINT [FK_Cadet_Role] FOREIGN KEY([RoleID])
+REFERENCES [dbo].[Role] ([ID])
+GO
+
+ALTER TABLE [dbo].[Cadet] CHECK CONSTRAINT [FK_Cadet_Role]
 GO
 
 USE [ZofimPortalDB]
