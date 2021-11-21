@@ -14,8 +14,11 @@ VALUES ('bbb', 'bbb', 2)
 INSERT INTO Parent
 VALUES ('AAA', 'AAA', '000000000', 1, 1, 1)
 
-INSERT INTO RoleID
+INSERT INTO [Role]
 VALUES ('cadet', 1)
 
 INSERT INTO Cadet
 VALUES ('aaa', 'AAA', '000000001', 1, 1, 2, 1)
+
+INSERT INTO Cadet_Parent
+VALUES(1,1)
