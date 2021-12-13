@@ -43,5 +43,12 @@ namespace ZofimPortalServer.Controllers
         {
             return context.IsUserExist(uName);
         }
+
+        [Route("SignUp")]
+        [HttpPost]
+        public object SignUp([FromBody] object user)
+        {
+
+        }
     }
 }
