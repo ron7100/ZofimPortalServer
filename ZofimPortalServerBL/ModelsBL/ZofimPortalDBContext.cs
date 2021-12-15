@@ -38,5 +38,11 @@ namespace ZofimPortalServerBL.Models
             User user = this.Users.Where(u => u.Username == uName).FirstOrDefault();
             return user != null;
         }
+
+        public void SignUp(User user)
+        {
+            this.Users.Add(user);
+            this.SaveChanges();
+        }
     }         
 }

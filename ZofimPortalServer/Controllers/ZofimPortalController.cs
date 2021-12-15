@@ -46,9 +46,16 @@ namespace ZofimPortalServer.Controllers
 
         [Route("SignUp")]
         [HttpPost]
-        public object SignUp([FromBody] object user)
+        public object SignUp([FromBody] User user)
         {
-
+            if (user == null)
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
+                return null;
+            }
+            Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+            context.SignUp(user);
+            return user;
         }
     }
 }
