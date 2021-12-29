@@ -1,4 +1,4 @@
-﻿USE [master]
+﻿	USE [master]
 GO
 
 /****** Object:  Database [ZofimPortalDB]    Script Date: 31/10/2021 08:47:01 ******/
@@ -369,5 +369,33 @@ REFERENCES [dbo].[Parent] ([ID])
 GO
 
 ALTER TABLE [dbo].[Cadet_Parent] CHECK CONSTRAINT [FK_Cadet_Parent_Parent]
+GO
+
+USE [ZofimPortalDB]
+GO
+
+/****** Object:  Table [dbo].[ActivitiesHistory]    Script Date: 29/12/2021 12:54:12 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[ActivitiesHistory](
+	[CadetID] [int] NOT NULL,
+	[Activity] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_ActivitiesHistory] PRIMARY KEY CLUSTERED 
+(
+	[CadetID] ASC,
+	[Activity] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[ActivitiesHistory]  WITH CHECK ADD  CONSTRAINT [FK_ActivitiesHistory_Cadet] FOREIGN KEY([CadetID])
+REFERENCES [dbo].[Cadet] ([ID])
+GO
+
+ALTER TABLE [dbo].[ActivitiesHistory] CHECK CONSTRAINT [FK_ActivitiesHistory_Cadet]
 GO
 

@@ -17,10 +17,12 @@ namespace ZofimPortalServerBL.Models
         {
         }
 
+        public virtual DbSet<ActivitiesHistory> ActivitiesHistories { get; set; }
         public virtual DbSet<Cadet> Cadets { get; set; }
         public virtual DbSet<CadetParent> CadetParents { get; set; }
         public virtual DbSet<Hanhaga> Hanhagas { get; set; }
         public virtual DbSet<Parent> Parents { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Shevet> Shevets { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Worker> Workers { get; set; }
@@ -29,6 +31,7 @@ namespace ZofimPortalServerBL.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=localhost\\sqlexpress;Database=ZofimPortalDB;Trusted_Connection=True;");
             }
         }
@@ -36,6 +39,23 @@ namespace ZofimPortalServerBL.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Hebrew_CI_AS");
+
+            modelBuilder.Entity<ActivitiesHistory>(entity =>
+            {
+                entity.HasKey(e => new { e.CadetId, e.Activity });
+
+                entity.ToTable("ActivitiesHistory");
+
+                entity.Property(e => e.CadetId).HasColumnName("CadetID");
+
+                entity.Property(e => e.Activity).HasMaxLength(50);
+
+                entity.HasOne(d => d.Cadet)
+                    .WithMany(p => p.ActivitiesHistories)
+                    .HasForeignKey(d => d.CadetId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ActivitiesHistory_Cadet");
+            });
 
             modelBuilder.Entity<Cadet>(entity =>
             {
@@ -55,26 +75,22 @@ namespace ZofimPortalServerBL.Models
                     .HasMaxLength(50)
                     .HasColumnName("lName");
 
-                entity.Property(e => e.ParentId).HasColumnName("ParentID");
-
                 entity.Property(e => e.PersonalId)
                     .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("PersonalID");
 
-                entity.Property(e => e.Role)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.RoleId).HasColumnName("RoleID");
 
                 entity.Property(e => e.ShevetId).HasColumnName("ShevetID");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
-                entity.HasOne(d => d.Parent)
+                entity.HasOne(d => d.Role)
                     .WithMany(p => p.Cadets)
-                    .HasForeignKey(d => d.ParentId)
+                    .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Cadet_Parent");
+                    .HasConstraintName("FK_Cadet_Role");
 
                 entity.HasOne(d => d.Shevet)
                     .WithMany(p => p.Cadets)
@@ -167,6 +183,19 @@ namespace ZofimPortalServerBL.Models
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Parent_User");
+            });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.ToTable("Role");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.RoleName)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Shevet>(entity =>
