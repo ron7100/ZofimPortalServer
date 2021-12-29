@@ -9,7 +9,6 @@ namespace ZofimPortalServerBL.Models
     {
         public User()
         {
-            Cadets = new HashSet<Cadet>();
             Parents = new HashSet<Parent>();
             Workers = new HashSet<Worker>();
         }
@@ -18,7 +17,6 @@ namespace ZofimPortalServerBL.Models
         public string Password { get; set; }
         public int Id { get; set; }
 
-        public virtual ICollection<Cadet> Cadets { get; set; }
         public virtual ICollection<Parent> Parents { get; set; }
         public virtual ICollection<Worker> Workers { get; set; }
     }

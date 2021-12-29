@@ -84,8 +84,6 @@ namespace ZofimPortalServerBL.Models
 
                 entity.Property(e => e.ShevetId).HasColumnName("ShevetID");
 
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Cadets)
                     .HasForeignKey(d => d.RoleId)
@@ -97,12 +95,6 @@ namespace ZofimPortalServerBL.Models
                     .HasForeignKey(d => d.ShevetId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Cadet_Shevet");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Cadets)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Cadet_User");
             });
 
             modelBuilder.Entity<CadetParent>(entity =>

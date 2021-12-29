@@ -206,7 +206,7 @@ CREATE TABLE [dbo].[Worker](
 	[PersonalID] [nvarchar](50) NOT NULL,
 	[ShevetID] [int] NULL,
 	[Role] [nvarchar](50) NOT NULL,
-	[HanhagaID] [int] NOT NULL,
+	[HanhagaID] [int] NULL,
 	[UserID] [int] NOT NULL,
 	[ID] [int] NOT NULL,
  CONSTRAINT [PK_Worker] PRIMARY KEY CLUSTERED 
@@ -311,7 +311,6 @@ CREATE TABLE [dbo].[Cadet](
 	[PersonalID] [nvarchar](50) NOT NULL,
 	[ShevetID] [int] NOT NULL,
 	[RoleID] [int] NOT NULL,
-	[UserID] [int] NOT NULL,
 	[ID] [int] NOT NULL,
  CONSTRAINT [PK_Cadet] PRIMARY KEY CLUSTERED 
 (
@@ -325,13 +324,6 @@ REFERENCES [dbo].[Shevet] ([ID])
 GO
 
 ALTER TABLE [dbo].[Cadet] CHECK CONSTRAINT [FK_Cadet_Shevet]
-GO
-
-ALTER TABLE [dbo].[Cadet]  WITH CHECK ADD  CONSTRAINT [FK_Cadet_User] FOREIGN KEY([UserID])
-REFERENCES [dbo].[User] ([ID])
-GO
-
-ALTER TABLE [dbo].[Cadet] CHECK CONSTRAINT [FK_Cadet_User]
 GO
 
 ALTER TABLE [dbo].[Cadet]  WITH CHECK ADD  CONSTRAINT [FK_Cadet_Role] FOREIGN KEY([RoleID])

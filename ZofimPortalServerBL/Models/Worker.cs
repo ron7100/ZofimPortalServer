@@ -12,7 +12,7 @@ namespace ZofimPortalServerBL.Models
         public string PersonalId { get; set; }
         public int? ShevetId { get; set; }
         public string Role { get; set; }
-        public int HanhagaId { get; set; }
+        public int? HanhagaId { get; set; }
         public int UserId { get; set; }
         public int Id { get; set; }
 
