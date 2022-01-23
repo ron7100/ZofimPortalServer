@@ -17,9 +17,9 @@ namespace ZofimPortalServer.Controllers
 
         [Route("Login")]
         [HttpGet]
-        public object Login([FromQuery] string uName, [FromQuery] string pass)
+        public User Login([FromQuery] string uName, [FromQuery] string pass)
         {
-            object user = context.Login(uName, pass);
+            User user = context.Login(uName, pass);
 
             if (user != null) //בודק האם ההתחברות הצליחה
             {
@@ -46,7 +46,7 @@ namespace ZofimPortalServer.Controllers
 
         [Route("SignUp")]
         [HttpPost]
-        public object SignUp([FromBody] User user)
+        public User SignUp([FromBody] User user)
         {
             if (user == null)
             {

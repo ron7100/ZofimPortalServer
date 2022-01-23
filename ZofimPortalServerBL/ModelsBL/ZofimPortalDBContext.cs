@@ -13,20 +13,19 @@ namespace ZofimPortalServerBL.Models
         //שלוש פעולות שונות שמנסות לחבר לכל סוג של משתמש, שתיים ייכשלו ורק הסוג הנכון יצליח
         //פעולה אחת שמחזירה אובייקט ובודקת לפי המשתמש איזה סוג אובייקט זה
         
-        public Object Login(string uName, string pass)
+        public User Login(string uName, string pass)
         {
             #region האם המשתמש קיים
             User user = this.Users.Where(u => u.Username == uName && u.Password == pass).FirstOrDefault();
-            if (user == null)
-                return null;//במקום בו קוראים לפעולה בודקים אם האובייקט שחזר ריק. אם כן, ההתחברות נכשלה
+            return user;
             #endregion
 
-            #region מציאת סוג המשתמש
-            object objToReturn = this.Workers.Where(w => w.UserId == user.Id).Include(w => w.Shevet).ThenInclude(w => w.Hanhaga).FirstOrDefault();
-            if(objToReturn==null)//בודק האם המשתמש הוא עובד
-                objToReturn = this.Parents.Where(p => p.UserId == user.Id).Include(p => p.Shevet).ThenInclude(p => p.Hanhaga).FirstOrDefault();//אם המשתמש הוא לא עובד, אז הוא הורה
-            return objToReturn;//מחזיר את המשתמש בתור הסוג של המשתמש
-            #endregion
+            //#region מציאת סוג המשתמש
+            //User objToReturn = this.Workers.Where(w => w.UserId == user.Id).Include(w => w.Shevet).ThenInclude(w => w.Hanhaga).FirstOrDefault();
+            //if(objToReturn==null)//בודק האם המשתמש הוא עובד
+            //    objToReturn = this.Parents.Where(p => p.UserId == user.Id).Include(p => p.Shevet).ThenInclude(p => p.Hanhaga).FirstOrDefault();//אם המשתמש הוא לא עובד, אז הוא הורה
+            //return this.Users.Where(u=>;//מחזיר את המשתמש בתור הסוג של המשתמש
+            //#endregion
         }
         public bool IsUserExist(string uName)
         {
