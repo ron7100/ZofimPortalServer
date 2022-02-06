@@ -145,21 +145,6 @@ namespace ZofimPortalServerBL.Models
                     .ValueGeneratedNever()
                     .HasColumnName("ID");
 
-                entity.Property(e => e.FName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("fName");
-
-                entity.Property(e => e.LName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("lName");
-
-                entity.Property(e => e.PersonalId)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("personalID");
-
                 entity.Property(e => e.ShevetId).HasColumnName("ShevetID");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
@@ -219,15 +204,30 @@ namespace ZofimPortalServerBL.Models
                     .ValueGeneratedNever()
                     .HasColumnName("ID");
 
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("email");
+
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("firstName");
+
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("lastName");
+
                 entity.Property(e => e.Password)
                     .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("password");
 
-                entity.Property(e => e.Username)
+                entity.Property(e => e.PersonalId)
                     .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("username");
+                    .HasMaxLength(10)
+                    .HasColumnName("personalID");
             });
 
             modelBuilder.Entity<Worker>(entity =>
@@ -238,22 +238,7 @@ namespace ZofimPortalServerBL.Models
                     .ValueGeneratedNever()
                     .HasColumnName("ID");
 
-                entity.Property(e => e.FName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("fName");
-
                 entity.Property(e => e.HanhagaId).HasColumnName("HanhagaID");
-
-                entity.Property(e => e.LName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("lName");
-
-                entity.Property(e => e.PersonalId)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("PersonalID");
 
                 entity.Property(e => e.Role)
                     .IsRequired()
@@ -266,7 +251,6 @@ namespace ZofimPortalServerBL.Models
                 entity.HasOne(d => d.Hanhaga)
                     .WithMany(p => p.Workers)
                     .HasForeignKey(d => d.HanhagaId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Worker_Hanhaga");
 
                 entity.HasOne(d => d.Shevet)

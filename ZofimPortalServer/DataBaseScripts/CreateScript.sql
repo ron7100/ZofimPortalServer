@@ -180,10 +180,13 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[User](
-	[username] [nvarchar](50) NOT NULL,
+	[email] [nvarchar](50) NOT NULL,
+	[firstName] [nvarchar](50) NOT NULL,
+	[lastName] [nvarchar](50) NOT NULL,
+	[personalID] [nvarchar](10) NOT NULL,
 	[password] [nvarchar](50) NOT NULL,
 	[ID] [int] NOT NULL,
- CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_email] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
@@ -201,9 +204,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[Worker](
-	[fName] [nvarchar](50) NOT NULL,
-	[lName] [nvarchar](50) NOT NULL,
-	[PersonalID] [nvarchar](50) NOT NULL,
 	[ShevetID] [int] NULL,
 	[Role] [nvarchar](50) NOT NULL,
 	[HanhagaID] [int] NULL,
@@ -248,9 +248,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[Parent](
-	[fName] [nvarchar](50) NOT NULL,
-	[lName] [nvarchar](50) NOT NULL,
-	[personalID] [nvarchar](50) NOT NULL,
 	[ShevetID] [int] NOT NULL,
 	[UserID] [int] NOT NULL,
 	[ID] [int] NOT NULL,

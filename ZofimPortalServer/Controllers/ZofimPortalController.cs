@@ -17,9 +17,9 @@ namespace ZofimPortalServer.Controllers
 
         [Route("Login")]
         [HttpGet]
-        public User Login([FromQuery] string uName, [FromQuery] string pass)
+        public User Login([FromQuery] string email, [FromQuery] string pass)
         {
-            User user = context.Login(uName, pass);
+            User user = context.Login(email, pass);
 
             if (user != null) //בודק האם ההתחברות הצליחה
             {
@@ -35,13 +35,14 @@ namespace ZofimPortalServer.Controllers
                 Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                 return null;
             }
+            
         }
 
         [Route("IsUserExist")]
         [HttpGet]
-        public bool IsUserExist([FromQuery] string uName)
+        public bool IsUserExist([FromQuery] string email)
         {
-            return context.IsUserExist(uName);
+            return context.IsUserExist(email);
         }
 
         [Route("SignUp")]

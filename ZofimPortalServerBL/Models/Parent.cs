@@ -7,9 +7,6 @@ namespace ZofimPortalServerBL.Models
 {
     public partial class Parent
     {
-        public string FName { get; set; }
-        public string LName { get; set; }
-        public string PersonalId { get; set; }
         public int ShevetId { get; set; }
         public int UserId { get; set; }
         public int Id { get; set; }

@@ -6,10 +6,10 @@ INSERT INTO Shevet
 VALUES ('Nachson', 1, 300, 1)
 
 INSERT INTO [User]
-VALUES ('aaa', 'aaa', 1)
+VALUES ('aaa@gmail.com', 'AAA', 'AAA', '000000000', 'aaa', 1)
 
 INSERT INTO Parent
-VALUES ('AAA', 'AAA', '000000000', 1, 1, 1)
+VALUES (1, 1, 1)
 
 INSERT INTO [Role]
 VALUES ('cadet', 1)

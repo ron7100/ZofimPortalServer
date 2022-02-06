@@ -7,9 +7,6 @@ namespace ZofimPortalServerBL.Models
 {
     public partial class Worker
     {
-        public string FName { get; set; }
-        public string LName { get; set; }
-        public string PersonalId { get; set; }
         public int? ShevetId { get; set; }
         public string Role { get; set; }
         public int? HanhagaId { get; set; }
