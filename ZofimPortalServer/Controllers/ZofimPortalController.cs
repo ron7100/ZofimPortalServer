@@ -58,5 +58,13 @@ namespace ZofimPortalServer.Controllers
             context.SignUp(user);
             return user;
         }
+
+        [Route("GetLastUserID")]
+        [HttpGet]
+        public int GetLastUserID()
+        {
+            int LastUserID = context.GetLastUserID();
+            return LastUserID;
+        }
     }
 }

@@ -24,6 +24,11 @@ namespace ZofimPortalServerBL.Models
             return user != null;
         }
 
+        public int GetLastUserID()
+        {
+            return Users.Where(u => u.Id > 0).OrderBy(user=>user.Id).LastOrDefault().Id;
+        }
+
         public void SignUp(User user)
         {
             this.Users.Add(user);
