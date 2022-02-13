@@ -15,7 +15,7 @@ INSERT INTO Parent
 VALUES (1, 1, 1)
 
 INSERT INTO Worker ([Role], UserID, ID)
-VALUES (0, 2, 1)
+VALUES (1, 2, 1)
 
 INSERT INTO [Role]
 VALUES ('cadet', 2)
