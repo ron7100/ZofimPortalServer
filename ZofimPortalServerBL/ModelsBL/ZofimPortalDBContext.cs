@@ -26,7 +26,24 @@ namespace ZofimPortalServerBL.Models
 
         public int GetLastUserID()
         {
-            return Users.Where(u => u.Id > 0).OrderBy(user=>user.Id).LastOrDefault().Id;
+            User us = Users.Where(u => u.Id > 0).OrderByDescending(user => user.Id).FirstOrDefault();
+            if (us == null)
+                return 0;
+            return us.Id;
+        }
+        public int GetLastWorkerID()
+        {
+            Worker wo = Workers.Where(w => w.Id > 0).OrderByDescending(worker => worker.Id).FirstOrDefault();
+            if (wo == null)
+                return 0;
+            return wo.Id;
+        }
+        public int GetLastParentID()
+        {
+            Parent pa = Parents.Where(p => p.Id > 0).OrderByDescending(parent => parent.Id).FirstOrDefault();
+            if (pa == null)
+                return 0;
+            return pa.Id;
         }
 
         public void SignUp(User user)

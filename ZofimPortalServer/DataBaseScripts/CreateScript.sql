@@ -248,7 +248,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[Parent](
-	[ShevetID] [int] NOT NULL,
+	[ShevetID] [int] NULL,
 	[UserID] [int] NOT NULL,
 	[ID] [int] NOT NULL,
  CONSTRAINT [PK_Parent] PRIMARY KEY CLUSTERED 

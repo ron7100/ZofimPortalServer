@@ -1,4 +1,4 @@
-﻿USE ZofimPortalDB
+﻿`USE ZofimPortalDB
 INSERT INTO Hanhaga
 VALUES ('Hashachar', 11, 'Hamerkaz', 1)
 

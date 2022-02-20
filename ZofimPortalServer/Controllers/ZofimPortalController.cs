@@ -63,8 +63,21 @@ namespace ZofimPortalServer.Controllers
         [HttpGet]
         public int GetLastUserID()
         {
-            int LastUserID = context.GetLastUserID();
-            return LastUserID;
+            return context.GetLastUserID();
+        }
+
+        [Route("GetLastWorkerID")]
+        [HttpGet]
+        public int GetLastWorkerID()
+        {
+            return context.GetLastWorkerID();
+        }
+
+        [Route("GetLastParentID")]
+        [HttpGet]
+        public int GetLastParentID()
+        {
+            return context.GetLastParentID();
         }
     }
 }

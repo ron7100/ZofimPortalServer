@@ -152,7 +152,6 @@ namespace ZofimPortalServerBL.Models
                 entity.HasOne(d => d.Shevet)
                     .WithMany(p => p.Parents)
                     .HasForeignKey(d => d.ShevetId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Parent_Shevet");
 
                 entity.HasOne(d => d.User)
