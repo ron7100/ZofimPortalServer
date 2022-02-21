@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using ZofimPortalServerBL.Models;
 
 namespace ZofimPortalServer.Controllers
@@ -78,6 +79,27 @@ namespace ZofimPortalServer.Controllers
         public int GetLastParentID()
         {
             return context.GetLastParentID();
+        }
+
+        [Route("GetAllUsers")]
+        [HttpGet]
+        public List<User> GetAllUsers()
+        {
+            return context.GetAllUsers();
+        }
+
+        [Route("GetAllWorkers")]
+        [HttpGet]
+        public List<Worker> GetAllWorkers()
+        {
+            return context.GetAllWorkers();
+        }
+
+        [Route("GetAllCadets")]
+        [HttpGet]
+        public List<Cadet> GetAllCadets()
+        {
+            return context.GetAllCadets();
         }
     }
 }

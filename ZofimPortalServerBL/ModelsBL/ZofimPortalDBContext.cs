@@ -46,6 +46,26 @@ namespace ZofimPortalServerBL.Models
             return pa.Id;
         }
 
+        public List<User> GetAllUsers()
+        {
+            return new List<User>(Users);
+        }
+
+        public List<Worker> GetAllWorkers()
+        {
+            return new List<Worker>(Workers);
+        }
+
+        public List<Parent> GetAllParents()
+        {
+            return new List<Parent>(Parents);
+        }
+
+        public List<Cadet> GetAllCadets()
+        {
+            return new List<Cadet>(Cadets);
+        }
+
         public void SignUp(User user)
         {
             this.Users.Add(user);
