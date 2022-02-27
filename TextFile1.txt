@@ -1,0 +1,6 @@
+Scaffold-DbContext "Server=localhost\SQLEXPRESS; Database=ZofimPortalDB; Trusted_Connection=true Microsoft.EntityFrameworkCore.SqlServer" -OutputDir Models -Context ZofimPortalDBContext –DataAnnotations -force
+lab
+
+
+Scaffold-DbContext "Server=DESKTOP-J4KA0BE\SQLEXPRESS; Database=ZofimPortalDB; Trusted_Connection=True Microsoft.EntityFrameworkCore.SqlServer" -OutputDir Models  -Context ZofimPortalDBContext -DataAnnotations -force
+home

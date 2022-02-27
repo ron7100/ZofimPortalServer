@@ -9,10 +9,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 namespace ZofimPortalServerBL.Models
 {
     public partial class ZofimPortalDBContext:DbContext
-    {
-        //שלוש פעולות שונות שמנסות לחבר לכל סוג של משתמש, שתיים ייכשלו ורק הסוג הנכון יצליח
-        //פעולה אחת שמחזירה אובייקט ובודקת לפי המשתמש איזה סוג אובייקט זה
-        
+    {        
         public User Login(string email, string pass)
         {
             User user = this.Users.Where(u => u.Email == email && u.Password == pass).FirstOrDefault();
@@ -24,6 +21,7 @@ namespace ZofimPortalServerBL.Models
             return user != null;
         }
 
+        #region שליפת ID
         public int GetLastUserID()
         {
             User us = Users.Where(u => u.Id > 0).OrderByDescending(user => user.Id).FirstOrDefault();
@@ -45,7 +43,9 @@ namespace ZofimPortalServerBL.Models
                 return 0;
             return pa.Id;
         }
+        #endregion
 
+        #region שליפת רשימות
         public List<User> GetAllUsers()
         {
             return new List<User>(Users);
@@ -53,7 +53,27 @@ namespace ZofimPortalServerBL.Models
 
         public List<Worker> GetAllWorkers()
         {
-            return new List<Worker>(Workers);
+            List<Worker> workers = new List<Worker>(Workers);
+            List<User> users = new List<User>(Users);
+            var workersUsers =
+                from user in users
+                join worker in workers on user.Id equals worker.UserId
+                select new
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    ShevetID = worker.ShevetId,
+                    Role = worker.Role,
+                    HanhagaID = worker.HanhagaId
+                };
+            //var workersUsersRole = 
+             //   from worker in workersUsers
+             //   join role in Roles on worker.RoleID
+            List<object> ToReturn = new List<object>();
+            foreach(var worker in workersUsers)
+            { }
+            return new List<Worker>();
         }
 
         public List<Parent> GetAllParents()
@@ -65,6 +85,7 @@ namespace ZofimPortalServerBL.Models
         {
             return new List<Cadet>(Cadets);
         }
+        #endregion
 
         public void SignUp(User user)
         {

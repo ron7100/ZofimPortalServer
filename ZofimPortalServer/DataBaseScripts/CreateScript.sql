@@ -3,12 +3,6 @@ GO
 
 /****** Object:  Database [ZofimPortalDB]    Script Date: 31/10/2021 08:47:01 ******/
 CREATE DATABASE [ZofimPortalDB]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'ZofimPortalDB', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\ZofimPortalDB.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
- LOG ON 
-( NAME = N'ZofimPortalDB_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\ZofimPortalDB_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
- WITH CATALOG_COLLATION = DATABASE_DEFAULT
 GO
 
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
@@ -133,13 +127,6 @@ CREATE TABLE [dbo].[Hanhaga](
 ) ON [PRIMARY]
 GO
 
-ALTER TABLE [dbo].[Hanhaga]  WITH CHECK ADD  CONSTRAINT [FK_Hanhaga_Hanhaga] FOREIGN KEY([ID])
-REFERENCES [dbo].[Hanhaga] ([ID])
-GO
-
-ALTER TABLE [dbo].[Hanhaga] CHECK CONSTRAINT [FK_Hanhaga_Hanhaga]
-GO
-
 USE [ZofimPortalDB]
 GO
 
@@ -196,6 +183,26 @@ GO
 USE [ZofimPortalDB]
 GO
 
+/****** Object:  Table [dbo].[Role]    Script Date: 21/11/2021 08:29:47 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Role](
+	[RoleName] [nvarchar](50) NOT NULL,
+	[ID] [int] NOT NULL,
+ CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+USE [ZofimPortalDB]
+GO
+
 /****** Object:  Table [dbo].[Worker]    Script Date: 31/10/2021 08:47:44 ******/
 SET ANSI_NULLS ON
 GO
@@ -205,7 +212,7 @@ GO
 
 CREATE TABLE [dbo].[Worker](
 	[ShevetID] [int] NULL,
-	[Role] [nvarchar](50) NOT NULL,
+	[RoleID] [int] NOT NULL,
 	[HanhagaID] [int] NULL,
 	[UserID] [int] NOT NULL,
 	[ID] [int] NOT NULL,
@@ -235,6 +242,13 @@ REFERENCES [dbo].[User] ([ID])
 GO
 
 ALTER TABLE [dbo].[Worker] CHECK CONSTRAINT [FK_Worker_User]
+GO
+
+ALTER TABLE [dbo].[Worker]  WITH CHECK ADD  CONSTRAINT [FK_Worker_Role] FOREIGN KEY([RoleID])
+REFERENCES [dbo].[Role] ([ID])
+GO
+
+ALTER TABLE [dbo].[Worker] CHECK CONSTRAINT [FK_Worker_Role]
 GO
 
 USE [ZofimPortalDB]
@@ -270,26 +284,6 @@ REFERENCES [dbo].[User] ([ID])
 GO
 
 ALTER TABLE [dbo].[Parent] CHECK CONSTRAINT [FK_Parent_User]
-GO
-
-USE [ZofimPortalDB]
-GO
-
-/****** Object:  Table [dbo].[Role]    Script Date: 21/11/2021 08:29:47 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TABLE [dbo].[Role](
-	[RoleName] [nvarchar](50) NOT NULL,
-	[ID] [int] NOT NULL,
- CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED 
-(
-	[ID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
 GO
 
 USE [ZofimPortalDB]

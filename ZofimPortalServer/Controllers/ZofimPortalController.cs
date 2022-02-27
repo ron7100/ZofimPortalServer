@@ -60,6 +60,7 @@ namespace ZofimPortalServer.Controllers
             return user;
         }
 
+        #region שליפת ID
         [Route("GetLastUserID")]
         [HttpGet]
         public int GetLastUserID()
@@ -80,7 +81,9 @@ namespace ZofimPortalServer.Controllers
         {
             return context.GetLastParentID();
         }
+        #endregion
 
+        #region שליפת רשימות
         [Route("GetAllUsers")]
         [HttpGet]
         public List<User> GetAllUsers()
@@ -95,11 +98,19 @@ namespace ZofimPortalServer.Controllers
             return context.GetAllWorkers();
         }
 
+        [Route("GetAllParents")]
+        [HttpGet]
+        public List<Parent> GetParents()
+        {
+            return context.GetAllParents();
+        }
+
         [Route("GetAllCadets")]
         [HttpGet]
         public List<Cadet> GetAllCadets()
         {
             return context.GetAllCadets();
         }
+        #endregion
     }
 }
