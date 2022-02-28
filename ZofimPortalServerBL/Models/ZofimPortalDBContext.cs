@@ -32,7 +32,7 @@ namespace ZofimPortalServerBL.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=localhost\\sqlexpress;Database=ZofimPortalDB;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS; Database=ZofimPortalDB; Trusted_Connection=true;");
             }
         }
 
@@ -44,12 +44,6 @@ namespace ZofimPortalServerBL.Models
             {
                 entity.HasKey(e => new { e.CadetId, e.Activity });
 
-                entity.ToTable("ActivitiesHistory");
-
-                entity.Property(e => e.CadetId).HasColumnName("CadetID");
-
-                entity.Property(e => e.Activity).HasMaxLength(50);
-
                 entity.HasOne(d => d.Cadet)
                     .WithMany(p => p.ActivitiesHistories)
                     .HasForeignKey(d => d.CadetId)
@@ -59,30 +53,7 @@ namespace ZofimPortalServerBL.Models
 
             modelBuilder.Entity<Cadet>(entity =>
             {
-                entity.ToTable("Cadet");
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
-
-                entity.Property(e => e.FName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("fName");
-
-                entity.Property(e => e.LName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("lName");
-
-                entity.Property(e => e.PersonalId)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("PersonalID");
-
-                entity.Property(e => e.RoleId).HasColumnName("RoleID");
-
-                entity.Property(e => e.ShevetId).HasColumnName("ShevetID");
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Cadets)
@@ -99,14 +70,6 @@ namespace ZofimPortalServerBL.Models
 
             modelBuilder.Entity<CadetParent>(entity =>
             {
-                entity.HasNoKey();
-
-                entity.ToTable("Cadet_Parent");
-
-                entity.Property(e => e.CadetId).HasColumnName("CadetID");
-
-                entity.Property(e => e.ParentId).HasColumnName("ParentID");
-
                 entity.HasOne(d => d.Cadet)
                     .WithMany()
                     .HasForeignKey(d => d.CadetId)
@@ -122,32 +85,12 @@ namespace ZofimPortalServerBL.Models
 
             modelBuilder.Entity<Hanhaga>(entity =>
             {
-                entity.ToTable("Hanhaga");
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
-
-                entity.Property(e => e.GeneralArea)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.Id).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<Parent>(entity =>
             {
-                entity.ToTable("Parent");
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
-
-                entity.Property(e => e.ShevetId).HasColumnName("ShevetID");
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.HasOne(d => d.Shevet)
                     .WithMany(p => p.Parents)
@@ -163,30 +106,12 @@ namespace ZofimPortalServerBL.Models
 
             modelBuilder.Entity<Role>(entity =>
             {
-                entity.ToTable("Role");
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
-
-                entity.Property(e => e.RoleName)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.Id).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<Shevet>(entity =>
             {
-                entity.ToTable("Shevet");
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
-
-                entity.Property(e => e.HanhagaId).HasColumnName("HanhagaID");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.HasOne(d => d.Hanhaga)
                     .WithMany(p => p.Shevets)
@@ -197,60 +122,23 @@ namespace ZofimPortalServerBL.Models
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("User");
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
-
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("email");
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("firstName");
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("lastName");
-
-                entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("password");
-
-                entity.Property(e => e.PersonalId)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .HasColumnName("personalID");
+                entity.Property(e => e.Id).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<Worker>(entity =>
             {
-                entity.ToTable("Worker");
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
-
-                entity.Property(e => e.HanhagaId).HasColumnName("HanhagaID");
-
-                entity.Property(e => e.Role)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.ShevetId).HasColumnName("ShevetID");
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.HasOne(d => d.Hanhaga)
                     .WithMany(p => p.Workers)
                     .HasForeignKey(d => d.HanhagaId)
                     .HasConstraintName("FK_Worker_Hanhaga");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.Workers)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Worker_Role");
 
                 entity.HasOne(d => d.Shevet)
                     .WithMany(p => p.Workers)

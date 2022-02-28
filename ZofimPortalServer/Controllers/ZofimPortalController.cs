@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ZofimPortalServerBL.Models;
+using ZofimPortalServer.DTO;
 
 namespace ZofimPortalServer.Controllers
 {
@@ -93,7 +94,7 @@ namespace ZofimPortalServer.Controllers
 
         [Route("GetAllWorkers")]
         [HttpGet]
-        public List<Worker> GetAllWorkers()
+        public List<WorkerToShow> GetAllWorkers()
         {
             return context.GetAllWorkers();
         }

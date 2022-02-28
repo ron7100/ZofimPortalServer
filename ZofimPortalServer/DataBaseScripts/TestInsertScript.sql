@@ -14,7 +14,7 @@ VALUES ('bbb@gmail.com', 'BBB', 'BBB', '000000002', 'bbb', 2)
 INSERT INTO Parent
 VALUES (1, 1, 1)
 
-INSERT INTO Worker ([Role], UserID, ID)
+INSERT INTO Worker ([RoleID], UserID, ID)
 VALUES (1, 2, 1)
 
 INSERT INTO [Role]

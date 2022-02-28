@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using ZofimPortalServer.DTO;
 
 namespace ZofimPortalServerBL.Models
 {
@@ -51,29 +52,30 @@ namespace ZofimPortalServerBL.Models
             return new List<User>(Users);
         }
 
-        public List<Worker> GetAllWorkers()
+        public List<WorkerToShow> GetAllWorkers()
         {
-            List<Worker> workers = new List<Worker>(Workers);
-            List<User> users = new List<User>(Users);
-            var workersUsers =
-                from user in users
-                join worker in workers on user.Id equals worker.UserId
-                select new
-                {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    ShevetID = worker.ShevetId,
-                    Role = worker.Role,
-                    HanhagaID = worker.HanhagaId
-                };
-            //var workersUsersRole = 
-             //   from worker in workersUsers
-             //   join role in Roles on worker.RoleID
-            List<object> ToReturn = new List<object>();
-            foreach(var worker in workersUsers)
-            { }
-            return new List<Worker>();
+            List<Worker> workers = new List<Worker>(Workers.Include(u=>u.User));
+
+            List<WorkerToShow> ToReturn = new List<WorkerToShow>();
+            foreach(var worker in workers)
+            { 
+                    WorkerToShow workerToShow = new WorkerToShow();
+                    workerToShow.FirstName = worker.User.FirstName;
+                    workerToShow.LastName = worker.User.LastName;
+                    workerToShow.Email = worker.User.Email;
+                    workerToShow.PersonalID = worker.User.PersonalId;
+                    int roleID = worker.RoleId;
+                    workerToShow.Role = Roles.Where(r => r.Id == roleID).FirstOrDefault().RoleName;
+                    int? shevetID = worker.ShevetId;
+                    if (shevetID != null)
+                        workerToShow.Shevet = Shevets.Where(s => s.Id == shevetID).FirstOrDefault().Name;
+                    int? hanhagaID = worker.HanhagaId;
+                    if (hanhagaID != null)
+                        workerToShow.Hanhaga = Hanhagas.Where(h => h.Id == hanhagaID).FirstOrDefault().Name;
+                    ToReturn.Add(workerToShow);
+
+            }
+            return ToReturn;
         }
 
         public List<Parent> GetAllParents()
@@ -89,7 +91,7 @@ namespace ZofimPortalServerBL.Models
 
         public void SignUp(User user)
         {
-            this.Users.Add(user);
+            this.Users.Update(user);
             this.SaveChanges();
         }
     }         
