@@ -82,9 +82,27 @@ namespace ZofimPortalServerBL.Models
             return ToReturn;
         }
 
-        public List<Parent> GetAllParents()
+        public List<ParentToShow> GetAllParents()
         {
-            return new List<Parent>(Parents);
+            List<Parent> parents = new List<Parent>(Parents.Include(u => u.User));
+
+            List<ParentToShow> ToReturn = new List<ParentToShow>();
+            foreach (var parent in parents)
+            {
+                ParentToShow parentToShow = new ParentToShow();
+                parentToShow.FirstName = parent.User.FirstName;
+                parentToShow.LastName = parent.User.LastName;
+                parentToShow.Email = parent.User.Email;
+                parentToShow.PersonalID = parent.User.PersonalId;
+                int? shevetID = parent.ShevetId;
+                parentToShow.Shevet = Shevets.Where(s => s.Id == shevetID).FirstOrDefault().Name;
+                int? hanhagaID = Shevets.Where(s=>s.Id==shevetID).FirstOrDefault().HanhagaId;
+                parentToShow.Hanhaga = Hanhagas.Where(h => h.Id == hanhagaID).FirstOrDefault().Name;
+                parentToShow.KidsNumber = CadetParents.Where(cp => cp.ParentId == parent.Id).Count();
+                ToReturn.Add(parentToShow);
+
+            }
+            return ToReturn;
         }
 
         public List<Cadet> GetAllCadets()

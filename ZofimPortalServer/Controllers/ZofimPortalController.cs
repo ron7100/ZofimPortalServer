@@ -101,7 +101,7 @@ namespace ZofimPortalServer.Controllers
 
         [Route("GetAllParents")]
         [HttpGet]
-        public List<Parent> GetParents()
+        public List<ParentToShow> GetParents()
         {
             return context.GetAllParents();
         }

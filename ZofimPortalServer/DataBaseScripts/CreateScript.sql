@@ -254,7 +254,7 @@ GO
 USE [ZofimPortalDB]
 GO
 
-/****** Object:  Table [dbo].[Parent]    Script Date: 31/10/2021 08:47:54 ******/
+/****** Object:  Table [dbo].[\]    Script Date: 31/10/2021 08:47:54 ******/
 SET ANSI_NULLS ON
 GO
 
