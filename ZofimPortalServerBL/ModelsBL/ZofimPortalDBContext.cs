@@ -69,9 +69,13 @@ namespace ZofimPortalServerBL.Models
                     int? shevetID = worker.ShevetId;
                     if (shevetID != null)
                         workerToShow.Shevet = Shevets.Where(s => s.Id == shevetID).FirstOrDefault().Name;
+                    else
+                        workerToShow.Shevet = "אין";
                     int? hanhagaID = worker.HanhagaId;
                     if (hanhagaID != null)
                         workerToShow.Hanhaga = Hanhagas.Where(h => h.Id == hanhagaID).FirstOrDefault().Name;
+                    else
+                        workerToShow.Hanhaga = "אין";
                     ToReturn.Add(workerToShow);
 
             }
