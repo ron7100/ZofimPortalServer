@@ -108,10 +108,17 @@ namespace ZofimPortalServer.Controllers
 
         [Route("GetAllCadets")]
         [HttpGet]
-        public List<Cadet> GetAllCadets()
+        public List<CadetToShow> GetAllCadets()
         {
             return context.GetAllCadets();
         }
         #endregion
+
+        [Route("GetPermissionLevel")]
+        [HttpGet]
+        public int GetPermissionLevel([FromQuery] int id)
+        {
+            return context.GetPermissionLevel(id);
+        }
     }
 }

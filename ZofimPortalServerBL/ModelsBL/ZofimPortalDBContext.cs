@@ -105,11 +105,50 @@ namespace ZofimPortalServerBL.Models
             return ToReturn;
         }
 
-        public List<Cadet> GetAllCadets()
+        public List<CadetToShow> GetAllCadets()
         {
-            return new List<Cadet>(Cadets);
+            List<Cadet> cadets = new List<Cadet>(Cadets);
+
+            List<CadetToShow> ToReturn = new List<CadetToShow>();
+            foreach (var cadet in cadets)
+            {
+                CadetToShow cadetToShow = new CadetToShow();
+                cadetToShow.FirstName = cadet.FName;
+                cadetToShow.LastName = cadet.LName;
+                cadetToShow.PersonalID = cadet.PersonalId;
+                int shevetID = cadet.ShevetId;
+                cadetToShow.Shevet = Shevets.Where(s => s.Id == shevetID).FirstOrDefault().Name;
+                int hanhagaID = Shevets.Where(s => s.Id == shevetID).FirstOrDefault().HanhagaId;
+                cadetToShow.Hanhaga = Hanhagas.Where(h => h.Id == hanhagaID).FirstOrDefault().Name;
+                int roleID = cadet.RoleId;
+                cadetToShow.Role = Roles.Where(r => r.Id == roleID).FirstOrDefault().RoleName;
+                ToReturn.Add(cadetToShow);
+
+            }
+            return ToReturn;
         }
         #endregion
+
+        public int GetPermissionLevel(int id)
+        {
+            //1 -> admin, can see all
+            //2 -> can see only from his hanhaga
+            //3 -> can see only parents and cadets from his shevet
+            User u = Users.Where(u => u.Id == id).FirstOrDefault();
+            if(u.Workers.Count>0)
+            {
+                Worker w = u.Workers.FirstOrDefault();
+                int roleID = w.RoleId;
+                string role = Roles.Where(r => r.Id == roleID).FirstOrDefault().RoleName;
+                if (role == "admin")
+                    return 1;
+                if (role == "rosh hanhaga")
+                    return 2;
+                if (role == "rosh shevet")
+                    return 3;
+            }
+            return 0;
+        }
 
         public void SignUp(User user)
         {

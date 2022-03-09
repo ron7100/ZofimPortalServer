@@ -1,21 +1,17 @@
 ﻿USE ZofimPortalDB
 INSERT INTO Hanhaga
-VALUES ('Hashachar', 11, 'Hamerkaz', 1)
+VALUES ('השחר', 11, 'Hamerkaz', 1)
 
 INSERT INTO Shevet
-VALUES ('Nachson', 1, 300, 1)
+VALUES ('נחשון', 1, 300, 1)
 
 INSERT INTO [User]
-VALUES ('aaa@gmail.com', 'AAA', 'AAA', '000000000', 'aaa', 1)
-
-INSERT INTO [User]
-VALUES ('bbb@gmail.com', 'BBB', 'BBB', '000000002', 'bbb', 2)
+VALUES ('aaa@gmail.com', 'AAA', 'AAA', '000000000', 'aaa', 1),
+	   ('bbb@gmail.com', 'BBB', 'BBB', '000000002', 'bbb', 2)
 
 INSERT INTO [Role]
-VALUES ('admin', 1)
-
-INSERT INTO [Role]
-VALUES ('חניך ד', 2)
+VALUES ('admin', 1),
+	   ('חניך ד', 2)
 
 INSERT INTO Parent
 VALUES (1, 1, 1)
