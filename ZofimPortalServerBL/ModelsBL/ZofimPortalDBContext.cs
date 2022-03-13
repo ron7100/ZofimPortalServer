@@ -10,17 +10,26 @@ using ZofimPortalServer.DTO;
 namespace ZofimPortalServerBL.Models
 {
     public partial class ZofimPortalDBContext:DbContext
-    {        
+    {
+        #region הרשמה והתחברות
         public User Login(string email, string pass)
         {
             User user = this.Users.Where(u => u.Email == email && u.Password == pass).FirstOrDefault();
             return user;
         }
+
         public bool IsUserExist(string email)
         {
             User user = this.Users.Where(u => u.Email == email).FirstOrDefault();
             return user != null;
         }
+
+        public void SignUp(User user)
+        {
+            this.Users.Update(user);
+            this.SaveChanges();
+        }
+        #endregion
 
         #region שליפת ID
         public int GetLastUserID()
@@ -129,15 +138,15 @@ namespace ZofimPortalServerBL.Models
         }
         #endregion
 
+        #region קבלת נתוני משתמש
         public int GetPermissionLevel(int id)
         {
             //1 -> admin, can see all
             //2 -> can see only from his hanhaga
             //3 -> can see only parents and cadets from his shevet
-            User u = Users.Where(u => u.Id == id).FirstOrDefault();
-            if(u.Workers.Count>0)
+            Worker w = Workers.Where(w => w.UserId == id).FirstOrDefault();
+            if(w!=null)
             {
-                Worker w = u.Workers.FirstOrDefault();
                 int roleID = w.RoleId;
                 string role = Roles.Where(r => r.Id == roleID).FirstOrDefault().RoleName;
                 if (role == "admin")
@@ -150,10 +159,32 @@ namespace ZofimPortalServerBL.Models
             return 0;
         }
 
-        public void SignUp(User user)
+        public string GetHanhaga(int id)
         {
-            this.Users.Update(user);
-            this.SaveChanges();
+            Worker w = Workers.Where(w => w.UserId == id).FirstOrDefault();
+            Parent p = Parents.Where(p => p.UserId == id).FirstOrDefault();
+            if (w != null)
+            {
+                int? wHanhagaId = w.HanhagaId;
+                return Hanhagas.Where(h => h.Id == wHanhagaId).FirstOrDefault().Name;
+            }
+            int? pShevetId = p.ShevetId;
+            int? pHanhagaId = Shevets.Where(s => s.Id == pShevetId).FirstOrDefault().HanhagaId;
+            return Hanhagas.Where(h => h.Id == pHanhagaId).FirstOrDefault().Name;
         }
+
+        public string GetShevet(int id)
+        {
+            Worker w = Workers.Where(w => w.UserId == id).FirstOrDefault();
+            Parent p = Parents.Where(p => p.UserId == id).FirstOrDefault();
+            if (w != null)
+            {
+                int? wShevetId = w.ShevetId;
+                return Shevets.Where(h => h.Id == wShevetId).FirstOrDefault().Name;
+            }
+            int? pShevetId = p.ShevetId;
+            return Shevets.Where(h => h.Id == pShevetId).FirstOrDefault().Name;
+        }
+        #endregion
     }         
 }

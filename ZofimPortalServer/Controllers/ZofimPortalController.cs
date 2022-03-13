@@ -17,6 +17,7 @@ namespace ZofimPortalServer.Controllers
         }
         #endregion
 
+        #region הרשמה והתחברות
         [Route("Login")]
         [HttpGet]
         public User Login([FromQuery] string email, [FromQuery] string pass)
@@ -60,6 +61,7 @@ namespace ZofimPortalServer.Controllers
             context.SignUp(user);
             return user;
         }
+        #endregion
 
         #region שליפת ID
         [Route("GetLastUserID")]
@@ -114,11 +116,27 @@ namespace ZofimPortalServer.Controllers
         }
         #endregion
 
+        #region קבלת נתוני משתמש
         [Route("GetPermissionLevel")]
         [HttpGet]
         public int GetPermissionLevel([FromQuery] int id)
         {
             return context.GetPermissionLevel(id);
         }
+
+        [Route("GetHanhaga")]
+        [HttpGet]
+        public string GetHanhaga([FromQuery] int id)
+        {
+            return context.GetHanhaga(id);
+        }
+
+        [Route("GetShevet")]
+        [HttpGet]
+        public string GetShevet([FromQuery] int id)
+        {
+            return context.GetShevet(id);
+        }
+        #endregion
     }
 }

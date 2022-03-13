@@ -354,9 +354,6 @@ GO
 ALTER TABLE [dbo].[Cadet_Parent] CHECK CONSTRAINT [FK_Cadet_Parent_Parent]
 GO
 
-USE [ZofimPortalDB]
-GO
-
 /****** Object:  Table [dbo].[ActivitiesHistory]    Script Date: 29/12/2021 12:54:12 ******/
 SET ANSI_NULLS ON
 GO
