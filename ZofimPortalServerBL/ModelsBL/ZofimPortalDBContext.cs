@@ -149,11 +149,11 @@ namespace ZofimPortalServerBL.Models
             {
                 int roleID = w.RoleId;
                 string role = Roles.Where(r => r.Id == roleID).FirstOrDefault().RoleName;
-                if (role == "admin")
+                if (role == "אדמין")
                     return 1;
-                if (role == "rosh hanhaga")
+                if (role == "ראש הנהגה")
                     return 2;
-                if (role == "rosh shevet")
+                if (role == "ראש שבט")
                     return 3;
             }
             return 0;
@@ -166,7 +166,9 @@ namespace ZofimPortalServerBL.Models
             if (w != null)
             {
                 int? wHanhagaId = w.HanhagaId;
-                return Hanhagas.Where(h => h.Id == wHanhagaId).FirstOrDefault().Name;
+                if (wHanhagaId != null)
+                    return Hanhagas.Where(h => h.Id == wHanhagaId).FirstOrDefault().Name;
+                return "";
             }
             int? pShevetId = p.ShevetId;
             int? pHanhagaId = Shevets.Where(s => s.Id == pShevetId).FirstOrDefault().HanhagaId;
@@ -180,7 +182,9 @@ namespace ZofimPortalServerBL.Models
             if (w != null)
             {
                 int? wShevetId = w.ShevetId;
-                return Shevets.Where(h => h.Id == wShevetId).FirstOrDefault().Name;
+                if(wShevetId!=null)
+                    return Shevets.Where(h => h.Id == wShevetId).FirstOrDefault().Name;
+                return "";
             }
             int? pShevetId = p.ShevetId;
             return Shevets.Where(h => h.Id == pShevetId).FirstOrDefault().Name;
