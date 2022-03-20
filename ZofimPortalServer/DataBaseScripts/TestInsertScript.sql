@@ -13,8 +13,25 @@ VALUES ('aaa@gmail.com', 'AAA', 'AAA', '000000000', 'aaa', 1),
 	   ('eee@gmail.com', 'EEE', 'EEE', '000000004', 'eee', 5),
 	   ('fff@gmail.com', 'FFF', 'FFF', '000000005', 'fff', 6),
 	   ('ggg@gmail.com', 'GGG', 'GGG', '000000006', 'ggg', 7),
-	   ('hhh@gmail.com', 'HHH', 'HHH', '000000007', 'hhh', 8)
-
+	   ('hhh@gmail.com', 'HHH', 'HHH', '000000007', 'hhh', 8),
+	   ('iii@gmail.com', 'III', 'III', '000000008', 'iii', 9),
+	   ('jjj@gmail.com', 'JJJ', 'JJJ', '000000009', 'jjj', 10),
+	   ('kkk@gmail.com', 'KKK', 'KKK', '000000010', 'kkk', 11),
+	   ('lll@gmail.com', 'LLL', 'LLL', '000000011', 'lll', 12),
+	   ('mmm@gmail.com', 'MMM', 'MMM', '000000012', 'mmm', 13),
+	   ('nnn@gmail.com', 'NNN', 'NNN', '000000013', 'nnn', 14),
+	   ('ooo@gmail.com', 'OOO', 'OOO', '000000014', 'ooo', 15),
+	   ('ppp@gmail.com', 'PPP', 'PPP', '000000015', 'ppp', 16),
+	   ('qqq@gmail.com', 'QQQ', 'QQQ', '000000016', 'qqq', 17),
+	   ('rrr@gmail.com', 'RRR', 'RRR', '000000017', 'rrr', 18),
+	   ('sss@gmail.com', 'SSS', 'SSS', '000000018', 'sss', 19),
+	   ('ttt@gmail.com', 'TTT', 'TTT', '000000019', 'ttt', 20),
+	   ('uuu@gmail.com', 'UUU', 'UUU', '000000020', 'uuu', 21),
+	   ('vvv@gmail.com', 'VVV', 'VVV', '000000021', 'vvv', 22),
+	   ('www@gmail.com', 'WWW', 'WWW', '000000022', 'www', 23),
+	   ('xxx@gmail.com', 'XXX', 'XXX', '000000023', 'xxx', 24),
+	   ('yyy@gmail.com', 'YYY', 'YYY', '000000024', 'yyy', 25),
+	   ('zzz@gmail.com', 'ZZZ', 'ZZZ', '000000025', 'zzz', 26)
 
 INSERT INTO [Role]
 VALUES ('אדמין', 1),
