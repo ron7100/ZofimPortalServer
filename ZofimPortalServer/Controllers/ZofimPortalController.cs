@@ -114,6 +114,27 @@ namespace ZofimPortalServer.Controllers
         {
             return context.GetAllCadets();
         }
+
+        [Route("GetAllRoles")]
+        [HttpGet]
+        public List<Role> GetAllRoles()
+        {
+            return context.GetAllRoles();
+        }
+
+        [Route("GetAllShevets")]
+        [HttpGet]
+        public List<Shevet> GetAllShevets()
+        {
+            return context.GetAllShevets();
+        }
+
+        [Route("GetAllHanhagas")]
+        [HttpGet]
+        public List<Hanhaga> GetAllHanhagas()
+        {
+            return context.GetAllHanhagas();
+        }
         #endregion
 
         #region קבלת נתוני משתמש

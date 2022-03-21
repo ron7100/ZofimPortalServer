@@ -136,6 +136,21 @@ namespace ZofimPortalServerBL.Models
             }
             return ToReturn;
         }
+
+        public List<Role> GetAllRoles()
+        {
+            return new List<Role>(Roles);
+        }
+
+        public List<Shevet> GetAllShevets()
+        {
+            return new List<Shevet>(Shevets);
+        }
+
+        public List<Hanhaga> GetAllHanhagas()
+        {
+            return new List<Hanhaga>(Hanhagas);
+        }
         #endregion
 
         #region קבלת נתוני משתמש
