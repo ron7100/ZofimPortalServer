@@ -275,7 +275,33 @@ VALUES ('aaa@gmail.com', 'AAA', 'AAA', '000000000', 'aaa', 1),
 	   ('www@gmail.com', 'WWW', 'WWW', '000000022', 'www', 23),
 	   ('xxx@gmail.com', 'XXX', 'XXX', '000000023', 'xxx', 24),
 	   ('yyy@gmail.com', 'YYY', 'YYY', '000000024', 'yyy', 25),
-	   ('zzz@gmail.com', 'ZZZ', 'ZZZ', '000000025', 'zzz', 26)
+	   ('zzz@gmail.com', 'ZZZ', 'ZZZ', '000000025', 'zzz', 26),
+	   ('aaa1@gmail.com', 'AAA1', 'AAA1', '000000026', 'aaa1', 27),
+	   ('bbb1@gmail.com', 'BBB1', 'BBB1', '000000027', 'bbb1', 28),
+	   ('ccc1@gmail.com', 'CCC1', 'CCC1', '000000028', 'ccc1', 29),
+	   ('ddd1@gmail.com', 'DDD1', 'DDD1', '000000029', 'ddd1', 30),
+	   ('eee1@gmail.com', 'EEE1', 'EEE1', '000000030', 'eee1', 31),
+	   ('fff1@gmail.com', 'FFF1', 'FFF1', '000000031', 'fff1', 32),
+	   ('ggg1@gmail.com', 'GGG1', 'GGG1', '000000032', 'ggg1', 33),
+	   ('hhh1@gmail.com', 'HHH1', 'HHH1', '000000033', 'hhh1', 34),
+	   ('iii1@gmail.com', 'III1', 'III1', '000000034', 'iii1', 35),
+	   ('jjj1@gmail.com', 'JJJ1', 'JJJ1', '000000035', 'jjj1', 36),
+	   ('kkk1@gmail.com', 'KKK1', 'KKK1', '000000036', 'kkk1', 37),
+	   ('lll1@gmail.com', 'LLL1', 'LLL1', '000000037', 'lll1', 38),
+	   ('mmm1@gmail.com', 'MMM1', 'MMM1', '000000038', 'mmm1', 39),
+	   ('nnn1@gmail.com', 'NNN1', 'NNN1', '000000039', 'nnn1', 40),
+	   ('ooo1@gmail.com', 'OOO1', 'OOO1', '000000040', 'ooo1', 41),
+	   ('ppp1@gmail.com', 'PPP1', 'PPP1', '000000041', 'ppp1', 42),
+	   ('qqq1@gmail.com', 'QQQ1', 'QQQ1', '000000042', 'qqq1', 43),
+	   ('rrr1@gmail.com', 'RRR1', 'RRR1', '000000043', 'rrr1', 44),
+	   ('sss1@gmail.com', 'SSS1', 'SSS1', '000000044', 'sss1', 45),
+	   ('ttt1@gmail.com', 'TTT1', 'TTT1', '000000045', 'ttt1', 46),
+	   ('uuu1@gmail.com', 'UUU1', 'UUU1', '000000046', 'uuu1', 47),
+	   ('vvv1@gmail.com', 'VVV1', 'VVV1', '000000047', 'vvv1', 48),
+	   ('www1@gmail.com', 'WWW1', 'WWW1', '000000048', 'www1', 49),
+	   ('xxx1@gmail.com', 'XXX1', 'XXX1', '000000049', 'xxx1', 50),
+	   ('yyy1@gmail.com', 'YYY1', 'YYY1', '000000050', 'yyy1', 51),
+	   ('zzz1@gmail.com', 'ZZZ1', 'ZZZ1', '000000051', 'zzz1', 52)
 
 INSERT INTO [Role]
 VALUES ('אדמין', 1),
@@ -313,10 +339,28 @@ INSERT INTO Worker ([RoleID], UserID, ID)
 VALUES (1, 2, 1)
 
 INSERT INTO Worker ([RoleID], HanhagaID, UserID, ID)
-VALUES (2, 1, 3, 2)
+VALUES (2, 1, 10, 2),
+	   (2, 2, 12, 4),
+	   (2, 3, 13, 5),
+	   (2, 4, 14, 6),
+	   (2, 5, 15, 7),
+	   (2, 6, 16, 8),
+	   (2, 7, 17, 9),
+	   (2, 8, 18, 10),
+	   (2, 9, 19, 11),
+	   (2, 10, 20, 12),
+	   (2, 11, 21, 13),
+	   (2, 12, 22, 14),
+	   (2, 13, 23, 15),
+	   (2, 14, 24, 16),
+	   (2, 15, 25, 17)
 
 INSERT INTO Worker(ShevetID, [RoleID], HanhagaID, UserID, ID)
-VALUES (1, 3, 1, 4, 3)
+VALUES (1, 3, 1, 11, 3),
+	   (45, 3, 3, 26, 18),
+	   (67, 3, 5, 27, 19),
+	   (112, 3, 8, 28, 20),
+	   (149, 3, 11, 29, 21)
 
 INSERT INTO Cadet
 VALUES ('aaa', 'AAA', '100000000', 1, 4, 1),
