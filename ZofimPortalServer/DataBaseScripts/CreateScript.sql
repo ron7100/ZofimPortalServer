@@ -1,4 +1,4 @@
-﻿ 	USE [master]
+﻿USE [master]
 GO
 
 /****** Object:  Database [ZofimPortalDB]    Script Date: 31/10/2021 08:47:01 ******/
