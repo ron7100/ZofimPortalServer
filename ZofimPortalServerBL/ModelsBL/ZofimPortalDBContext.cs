@@ -109,7 +109,6 @@ namespace ZofimPortalServerBL.Models
                 parentToShow.Hanhaga = Hanhagas.Where(h => h.Id == hanhagaID).FirstOrDefault().Name;
                 parentToShow.KidsNumber = CadetParents.Where(cp => cp.ParentId == parent.Id).Count();
                 ToReturn.Add(parentToShow);
-
             }
             return ToReturn;
         }
