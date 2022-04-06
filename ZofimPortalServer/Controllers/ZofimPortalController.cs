@@ -63,6 +63,36 @@ namespace ZofimPortalServer.Controllers
         }
         #endregion
 
+        #region שמירת שינויים
+        [Route("SaveUserChanges")]
+        [HttpPost]
+        public void SaveUserChanges([FromBody] User u)
+        {
+            context.SaveUserChanges(u);
+        }
+
+        [Route("SaveWorkerChanges")]
+        [HttpPost]
+        public void SaveWorkerChanges([FromBody] WorkerToShow w)
+        {
+            context.SaveWorkerChanges(w);
+        }
+
+        [Route("SaveParentChanges")]
+        [HttpPost]
+        public void SaveParentChanges([FromBody] ParentToShow p)
+        {
+            context.SaveParentChanges(p);
+        }
+
+        [Route("SaveCadetChanges")]
+        [HttpPost]
+        public void SaveCadetChanges([FromBody] CadetToShow c)
+        {
+            context.SaveCadetChanges(c);
+        }
+        #endregion
+
         #region שליפת ID
         [Route("GetLastUserID")]
         [HttpGet]
