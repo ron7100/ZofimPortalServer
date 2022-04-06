@@ -48,6 +48,14 @@ namespace ZofimPortalServer.Controllers
             return context.IsUserExist(email);
         }
 
+        [Route("IsIdExist")]
+        [HttpGet]
+        public bool IsIdExist([FromQuery] string id)
+        {
+            return context.IsIdExist(id);
+        }
+
+
         [Route("SignUp")]
         [HttpPost]
         public User SignUp([FromBody] User user)

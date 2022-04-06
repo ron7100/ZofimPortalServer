@@ -24,6 +24,15 @@ namespace ZofimPortalServerBL.Models
             return user != null;
         }
 
+        public bool IsIdExist(string id)
+        {
+            User user = this.Users.Where(u => u.PersonalId == id).FirstOrDefault();
+            if (user != null)
+                return true;
+            Cadet cadet = this.Cadets.Where(c => c.PersonalId == id).FirstOrDefault();
+            return cadet != null;
+        }
+
         public void SignUp(User user)
         {
             this.Users.Update(user);
