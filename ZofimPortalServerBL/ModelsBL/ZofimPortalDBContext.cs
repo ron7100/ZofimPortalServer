@@ -99,6 +99,14 @@ namespace ZofimPortalServerBL.Models
             c.RoleId = Roles.Where(r => r.RoleName == ca.Role).FirstOrDefault().Id;
             Hanhaga hanhaga = Hanhagas.Where(h => h.Name == ca.Hanhaga).FirstOrDefault();
             c.ShevetId = Shevets.Where(s => s.Name == ca.Shevet && s.HanhagaId == hanhaga.Id).FirstOrDefault().Id;
+            SaveChanges();
+        }
+
+        public void AddCadet(Cadet c)
+        {
+            c.Id = GetLastCadetID() + 1;
+            Cadets.Add(c);
+            SaveChanges();
         }
         #endregion
 
@@ -123,6 +131,13 @@ namespace ZofimPortalServerBL.Models
             if (pa == null)
                 return 0;
             return pa.Id;
+        }
+        public int GetLastCadetID()
+        {
+            Cadet ca = Cadets.Where(c => c.Id > 0).OrderByDescending(cadet => cadet.Id).FirstOrDefault();
+            if (ca == null)
+                return 0;
+            return ca.Id;
         }
         #endregion
 

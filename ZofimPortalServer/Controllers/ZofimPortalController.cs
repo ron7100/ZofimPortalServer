@@ -99,6 +99,13 @@ namespace ZofimPortalServer.Controllers
         {
             context.SaveCadetChanges(c);
         }
+
+        [Route("AddCadet")]
+        [HttpPost]
+        public void AddCadet([FromBody] Cadet c)
+        {
+            context.AddCadet(c);
+        }
         #endregion
 
         #region שליפת ID
