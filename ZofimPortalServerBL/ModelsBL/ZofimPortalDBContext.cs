@@ -48,6 +48,7 @@ namespace ZofimPortalServerBL.Models
             u.FirstName = us.FirstName;
             u.LastName = us.LastName;
             u.PersonalId = us.PersonalId;
+            u.Password = us.Password;
             SaveChanges();
         }
 
