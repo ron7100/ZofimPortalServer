@@ -108,6 +108,15 @@ namespace ZofimPortalServerBL.Models
             Cadets.Add(c);
             SaveChanges();
         }
+
+        public void ConnectCadetParent(int cadetID, int parentID)
+        {
+            CadetParent cadetParent = new CadetParent();
+            cadetParent.CadetId = cadetID;
+            cadetParent.ParentId = parentID;
+            CadetParents.Add(cadetParent);
+            SaveChanges();
+        }
         #endregion
 
         #region שליפת ID

@@ -106,6 +106,13 @@ namespace ZofimPortalServer.Controllers
         {
             context.AddCadet(c);
         }
+
+        [Route("ConnectCadetParent")]
+        [HttpPost]
+        public void ConnectCadetParent([FromQuery] int cadetID, [FromQuery] int parentID)
+        {
+            context.ConnectCadetParent(cadetID, parentID);
+        }
         #endregion
 
         #region שליפת ID
