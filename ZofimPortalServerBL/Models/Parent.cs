@@ -11,6 +11,11 @@ namespace ZofimPortalServerBL.Models
     [Table("Parent")]
     public partial class Parent
     {
+        public Parent()
+        {
+            CadetParents = new HashSet<CadetParent>();
+        }
+
         [Column("ShevetID")]
         public int? ShevetId { get; set; }
         [Column("UserID")]
@@ -25,5 +30,7 @@ namespace ZofimPortalServerBL.Models
         [ForeignKey(nameof(UserId))]
         [InverseProperty("Parents")]
         public virtual User User { get; set; }
+        [InverseProperty(nameof(CadetParent.Parent))]
+        public virtual ICollection<CadetParent> CadetParents { get; set; }
     }
 }

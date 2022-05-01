@@ -14,6 +14,7 @@ namespace ZofimPortalServerBL.Models
         public Cadet()
         {
             ActivitiesHistories = new HashSet<ActivitiesHistory>();
+            CadetParents = new HashSet<CadetParent>();
         }
 
         [Required]
@@ -44,5 +45,7 @@ namespace ZofimPortalServerBL.Models
         public virtual Shevet Shevet { get; set; }
         [InverseProperty(nameof(ActivitiesHistory.Cadet))]
         public virtual ICollection<ActivitiesHistory> ActivitiesHistories { get; set; }
+        [InverseProperty(nameof(CadetParent.Cadet))]
+        public virtual ICollection<CadetParent> CadetParents { get; set; }
     }
 }

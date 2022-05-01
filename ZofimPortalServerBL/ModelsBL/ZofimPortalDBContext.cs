@@ -102,18 +102,16 @@ namespace ZofimPortalServerBL.Models
             SaveChanges();
         }
 
-        public void AddCadet(Cadet c)
+        public Cadet AddCadet(Cadet c)
         {
             c.Id = GetLastCadetID() + 1;
             Cadets.Add(c);
             SaveChanges();
+            return c;
         }
 
-        public void ConnectCadetParent(int cadetID, int parentID)
+        public void ConnectCadetParent(CadetParent cadetParent)
         {
-            CadetParent cadetParent = new CadetParent();
-            cadetParent.CadetId = cadetID;
-            cadetParent.ParentId = parentID;
             CadetParents.Add(cadetParent);
             SaveChanges();
         }

@@ -102,16 +102,17 @@ namespace ZofimPortalServer.Controllers
 
         [Route("AddCadet")]
         [HttpPost]
-        public void AddCadet([FromBody] Cadet c)
+        public Cadet AddCadet([FromBody] Cadet c)
         {
-            context.AddCadet(c);
+            Cadet cadet = context.AddCadet(c);
+            return cadet;
         }
 
         [Route("ConnectCadetParent")]
         [HttpPost]
-        public void ConnectCadetParent([FromQuery] int cadetID, [FromQuery] int parentID)
+        public void ConnectCadetParent([FromBody] CadetParent cadetParent)
         {
-            context.ConnectCadetParent(cadetID, parentID);
+            context.ConnectCadetParent(cadetParent);
         }
         #endregion
 
