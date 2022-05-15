@@ -38,7 +38,7 @@ namespace ZofimPortalServer.Controllers
                 Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                 return null;
             }
-            
+
         }
 
         [Route("IsUserExist")]
@@ -175,18 +175,25 @@ namespace ZofimPortalServer.Controllers
             return context.GetAllRoles();
         }
 
-        [Route("GetAllShevets")]
-        [HttpGet]
-        public List<Shevet> GetAllShevets()
-        {
-            return context.GetAllShevets();
-        }
-
         [Route("GetAllHanhagas")]
         [HttpGet]
         public List<Hanhaga> GetAllHanhagas()
         {
             return context.GetAllHanhagas();
+        }
+
+        [Route("GetAllShevets")]
+        [HttpGet]
+        public List<ShevetToShow> GetAllShevets()
+        {
+            return context.GetAllShevets();
+        }
+
+        [Route("GetShevetsForHanhaga")]
+        [HttpGet]
+        public List<ShevetToShow> GetShevetsForHanhaga([FromQuery] int hanhagaID)
+        {
+            return context.GetShevetsForHanhaga(hanhagaId);
         }
         #endregion
 
@@ -195,6 +202,9 @@ namespace ZofimPortalServer.Controllers
         [HttpGet]
         public int GetPermissionLevel([FromQuery] int id)
         {
+            //1 -> admin, can see all
+            //2 -> can see only from his hanhaga
+            //3 -> can see only parents and cadets from his shevet
             return context.GetPermissionLevel(id);
         }
 

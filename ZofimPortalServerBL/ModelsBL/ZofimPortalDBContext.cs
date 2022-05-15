@@ -159,14 +159,16 @@ namespace ZofimPortalServerBL.Models
             List<Worker> workers = new List<Worker>(Workers.Include(u=>u.User));
 
             List<WorkerToShow> ToReturn = new List<WorkerToShow>();
-            foreach(var worker in workers)
-            { 
-                WorkerToShow workerToShow = new WorkerToShow();
-                workerToShow.ID = worker.Id;
-                workerToShow.FirstName = worker.User.FirstName;
-                workerToShow.LastName = worker.User.LastName;
-                workerToShow.Email = worker.User.Email;
-                workerToShow.PersonalID = worker.User.PersonalId;
+            foreach (var worker in workers)
+            {
+                WorkerToShow workerToShow = new WorkerToShow
+                {
+                    ID = worker.Id,
+                    FirstName = worker.User.FirstName,
+                    LastName = worker.User.LastName,
+                    Email = worker.User.Email,
+                    PersonalID = worker.User.PersonalId
+                };
                 int roleID = worker.RoleId;
                 workerToShow.Role = Roles.Where(r => r.Id == roleID).FirstOrDefault().RoleName;
                 int? shevetID = worker.ShevetId;
@@ -192,12 +194,14 @@ namespace ZofimPortalServerBL.Models
             List<ParentToShow> ToReturn = new List<ParentToShow>();
             foreach (var parent in parents)
             {
-                ParentToShow parentToShow = new ParentToShow();
-                parentToShow.ID = parent.Id;
-                parentToShow.FirstName = parent.User.FirstName;
-                parentToShow.LastName = parent.User.LastName;
-                parentToShow.Email = parent.User.Email;
-                parentToShow.PersonalID = parent.User.PersonalId;
+                ParentToShow parentToShow = new ParentToShow
+                {
+                    ID = parent.Id,
+                    FirstName = parent.User.FirstName,
+                    LastName = parent.User.LastName,
+                    Email = parent.User.Email,
+                    PersonalID = parent.User.PersonalId
+                };
                 int? shevetID = parent.ShevetId;
                 parentToShow.Shevet = Shevets.Where(s => s.Id == shevetID).FirstOrDefault().Name;
                 int? hanhagaID = Shevets.Where(s=>s.Id==shevetID).FirstOrDefault().HanhagaId;
@@ -215,11 +219,13 @@ namespace ZofimPortalServerBL.Models
             List<CadetToShow> ToReturn = new List<CadetToShow>();
             foreach (var cadet in cadets)
             {
-                CadetToShow cadetToShow = new CadetToShow();
-                cadetToShow.ID = cadet.Id;
-                cadetToShow.FirstName = cadet.FName;
-                cadetToShow.LastName = cadet.LName;
-                cadetToShow.PersonalID = cadet.PersonalId;
+                CadetToShow cadetToShow = new CadetToShow
+                {
+                    ID = cadet.Id,
+                    FirstName = cadet.FName,
+                    LastName = cadet.LName,
+                    PersonalID = cadet.PersonalId
+                };
                 int shevetID = cadet.ShevetId;
                 cadetToShow.Shevet = Shevets.Where(s => s.Id == shevetID).FirstOrDefault().Name;
                 int hanhagaID = Shevets.Where(s => s.Id == shevetID).FirstOrDefault().HanhagaId;
@@ -237,14 +243,46 @@ namespace ZofimPortalServerBL.Models
             return new List<Role>(Roles);
         }
 
-        public List<Shevet> GetAllShevets()
-        {
-            return new List<Shevet>(Shevets);
-        }
-
         public List<Hanhaga> GetAllHanhagas()
         {
             return new List<Hanhaga>(Hanhagas);
+        }
+
+        public List<ShevetToShow> GetAllShevets()
+        {
+            List<ShevetToShow> toReturn = new List<ShevetToShow>();
+            foreach(Shevet s in Shevets)
+            {
+                ShevetToShow sts = new ShevetToShow
+                {
+                    ID = s.Id,
+                    Name = s.Name,
+                    MembersAmount = s.MembersAmount,
+                    Hanhaga = Hanhagas.Where(h => h.Id == s.HanhagaId).FirstOrDefault().Name
+                };
+                toReturn.Add(sts);
+            }
+            return toReturn;
+        }
+
+        public List<ShevetToShow> GetShevetsForHanhaga(int hanhagaId)
+        {
+            List<ShevetToShow> toReturn = new List<ShevetToShow>();
+            foreach(Shevet s in Shevets)
+            {
+                if (s.HanhagaId == hanhagaId)
+                {
+                    ShevetToShow sts = new ShevetToShow
+                    {
+                        ID = s.Id,
+                        Name = s.Name,
+                        MembersAmount = s.MembersAmount,
+                        Hanhaga = Hanhagas.Where(h => h.Id == hanhagaId).FirstOrDefault().Name
+                    };
+                    toReturn.Add(sts);
+                }
+            }
+            return toReturn;
         }
         #endregion
 
