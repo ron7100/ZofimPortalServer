@@ -184,16 +184,23 @@ namespace ZofimPortalServer.Controllers
 
         [Route("GetAllShevets")]
         [HttpGet]
-        public List<ShevetToShow> GetAllShevets()
+        public List<Shevet> GetAllShevets()
         {
             return context.GetAllShevets();
         }
 
+        [Route("GetAllShevetsToShow")]
+        [HttpGet]
+        public List<ShevetToShow> GetAllShevetsToShow()
+        {
+            return context.GetAllShevetsToShow();
+        }
+
         [Route("GetShevetsForHanhaga")]
         [HttpGet]
-        public List<ShevetToShow> GetShevetsForHanhaga([FromQuery] int hanhagaID)
+        public List<ShevetToShow> GetShevetsForHanhaga([FromQuery] string hanhaga)
         {
-            return context.GetShevetsForHanhaga(hanhagaId);
+            return context.GetShevetsForHanhaga(hanhaga);
         }
         #endregion
 

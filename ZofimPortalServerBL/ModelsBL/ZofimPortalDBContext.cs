@@ -204,7 +204,7 @@ namespace ZofimPortalServerBL.Models
                 };
                 int? shevetID = parent.ShevetId;
                 parentToShow.Shevet = Shevets.Where(s => s.Id == shevetID).FirstOrDefault().Name;
-                int? hanhagaID = Shevets.Where(s=>s.Id==shevetID).FirstOrDefault().HanhagaId;
+                int? hanhagaID = Shevets.Where(s => s.Id == shevetID).FirstOrDefault().HanhagaId;
                 parentToShow.Hanhaga = Hanhagas.Where(h => h.Id == hanhagaID).FirstOrDefault().Name;
                 parentToShow.KidsNumber = CadetParents.Where(cp => cp.ParentId == parent.Id).Count();
                 ToReturn.Add(parentToShow);
@@ -248,25 +248,30 @@ namespace ZofimPortalServerBL.Models
             return new List<Hanhaga>(Hanhagas);
         }
 
-        public List<ShevetToShow> GetAllShevets()
+        public List<Shevet> GetAllShevets()
+        {
+            return new List<Shevet>(Shevets);
+        }
+
+        public List<ShevetToShow> GetAllShevetsToShow()
         {
             List<ShevetToShow> toReturn = new List<ShevetToShow>();
-            foreach(Shevet s in Shevets)
+            List<Shevet> shevetsEzer = new List<Shevet>(Shevets);
+            foreach(Shevet s in shevetsEzer)
             {
-                ShevetToShow sts = new ShevetToShow
-                {
-                    ID = s.Id,
-                    Name = s.Name,
-                    MembersAmount = s.MembersAmount,
-                    Hanhaga = Hanhagas.Where(h => h.Id == s.HanhagaId).FirstOrDefault().Name
-                };
+                ShevetToShow sts = new ShevetToShow();
+                sts.ID = s.Id;
+                sts.Name = s.Name;
+                sts.MembersAmount = s.MembersAmount;
+                sts.Hanhaga = Hanhagas.Where(h => h.Id == s.HanhagaId).FirstOrDefault().Name;
                 toReturn.Add(sts);
             }
             return toReturn;
         }
 
-        public List<ShevetToShow> GetShevetsForHanhaga(int hanhagaId)
+        public List<ShevetToShow> GetShevetsForHanhaga(string hanhaga)
         {
+            int hanhagaId = Hanhagas.Where(h => h.Name == hanhaga).FirstOrDefault().Id;
             List<ShevetToShow> toReturn = new List<ShevetToShow>();
             foreach(Shevet s in Shevets)
             {
