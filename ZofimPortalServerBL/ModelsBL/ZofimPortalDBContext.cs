@@ -102,6 +102,32 @@ namespace ZofimPortalServerBL.Models
             SaveChanges();
         }
 
+        public void SaveShevetChanges(ShevetToShow sh)
+        {
+            Shevet s = Shevets.Where(s => s.Id == sh.ID).FirstOrDefault();
+            s.Name = sh.Name;
+            s.MembersAmount = sh.MembersAmount;
+            Hanhaga hanhaga = Hanhagas.Where(h => h.Name == sh.Hanhaga).FirstOrDefault();
+            s.HanhagaId = hanhaga.Id;
+            SaveChanges();
+        }
+
+        public void SaveHanhagaChanges(Hanhaga ha)
+        {
+            Hanhaga h = Hanhagas.Where(h => h.Id == ha.Id).FirstOrDefault();
+            h.Name = ha.Name;
+            h.GeneralArea = ha.GeneralArea;
+            int count = 0;
+            foreach(Shevet s in ha.Shevets)
+            {
+                count++;
+                Shevet ezer = Shevets.Where(sh => sh.Id == s.Id).FirstOrDefault();
+                h.Shevets.Add(ezer);
+            }
+            h.ShevetNumber = count;
+            SaveChanges();
+        }
+
         public Cadet AddCadet(Cadet c)
         {
             c.Id = GetLastCadetID() + 1;
@@ -114,6 +140,15 @@ namespace ZofimPortalServerBL.Models
         {
             CadetParents.Add(cadetParent);
             SaveChanges();
+        }
+
+        public Shevet AddShevet(Shevet s)
+        {
+            s.Id = GetLastShevetID() + 1;
+            Shevets.Add(s);
+            Hanhagas.Where(h => h.Id == s.HanhagaId).FirstOrDefault().ShevetNumber++;   
+            SaveChanges();
+            return s;
         }
         #endregion
 
@@ -145,6 +180,14 @@ namespace ZofimPortalServerBL.Models
             if (ca == null)
                 return 0;
             return ca.Id;
+        }
+
+        public int GetLastShevetID()
+        {
+            Shevet sh = Shevets.Where(s => s.Id > 0).OrderByDescending(shevet => shevet.Id).FirstOrDefault();
+            if (sh == null)
+                return 0;
+            return sh.Id;
         }
         #endregion
 
@@ -265,6 +308,18 @@ namespace ZofimPortalServerBL.Models
                 sts.MembersAmount = s.MembersAmount;
                 sts.Hanhaga = Hanhagas.Where(h => h.Id == s.HanhagaId).FirstOrDefault().Name;
                 toReturn.Add(sts);
+            }
+            return toReturn;
+        }
+
+        public List<Shevet> GetShevetsObjectsForHanhaga(string hanhaga)
+        {
+            int hanhagaId = Hanhagas.Where(h => h.Name == hanhaga).FirstOrDefault().Id;
+            List<Shevet> toReturn = new List<Shevet>();
+            foreach (Shevet s in Shevets)
+            {
+                if (s.HanhagaId == hanhagaId)
+                    toReturn.Add(s);
             }
             return toReturn;
         }

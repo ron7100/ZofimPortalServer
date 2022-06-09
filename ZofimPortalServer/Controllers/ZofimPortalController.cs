@@ -100,6 +100,20 @@ namespace ZofimPortalServer.Controllers
             context.SaveCadetChanges(c);
         }
 
+        [Route("SaveShevetChanges")]
+        [HttpPost]
+        public void SaveShevetChanges([FromBody] ShevetToShow s)
+        {
+            context.SaveShevetChanges(s);
+        }
+
+        [Route("SaveHanhagaChanges")]
+        [HttpPost]
+        public void SaveHanhagaChanges([FromBody] Hanhaga h)
+        {
+            context.SaveHanhagaChanges(h);
+        }
+
         [Route("AddCadet")]
         [HttpPost]
         public Cadet AddCadet([FromBody] Cadet c)
@@ -113,6 +127,14 @@ namespace ZofimPortalServer.Controllers
         public void ConnectCadetParent([FromBody] CadetParent cadetParent)
         {
             context.ConnectCadetParent(cadetParent);
+        }
+
+        [Route("AddShevet")]
+        [HttpPost]
+        public Shevet AddShevet([FromBody] Shevet s)
+        {
+            Shevet shevet = context.AddShevet(s);
+            return shevet;
         }
         #endregion
 
@@ -194,6 +216,13 @@ namespace ZofimPortalServer.Controllers
         public List<ShevetToShow> GetAllShevetsToShow()
         {
             return context.GetAllShevetsToShow();
+        }
+
+        [Route("GetShevetsObjectsForHanhaga")]
+        [HttpGet]
+        public List<Shevet> GetShevetsObjectsForHanhaga([FromQuery] string hanhaga)
+        {
+            return context.GetShevetsObjectsForHanhaga(hanhaga);
         }
 
         [Route("GetShevetsForHanhaga")]
