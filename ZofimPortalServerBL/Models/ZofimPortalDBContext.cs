@@ -18,6 +18,7 @@ namespace ZofimPortalServerBL.Models
         }
 
         public virtual DbSet<ActivitiesHistory> ActivitiesHistories { get; set; }
+        public virtual DbSet<Activity> Activities { get; set; }
         public virtual DbSet<Cadet> Cadets { get; set; }
         public virtual DbSet<CadetParent> CadetParents { get; set; }
         public virtual DbSet<Hanhaga> Hanhagas { get; set; }
@@ -42,13 +43,30 @@ namespace ZofimPortalServerBL.Models
 
             modelBuilder.Entity<ActivitiesHistory>(entity =>
             {
-                entity.HasKey(e => new { e.CadetId, e.Activity });
+                entity.HasKey(e => new { e.CadetId, e.ActivityId });
+
+                entity.HasOne(d => d.Activity)
+                    .WithMany(p => p.ActivitiesHistories)
+                    .HasForeignKey(d => d.ActivityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ActivitiesHistory_Activity");
 
                 entity.HasOne(d => d.Cadet)
                     .WithMany(p => p.ActivitiesHistories)
                     .HasForeignKey(d => d.CadetId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ActivitiesHistory_Cadet");
+            });
+
+            modelBuilder.Entity<Activity>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.Shevet)
+                    .WithMany(p => p.Activities)
+                    .HasForeignKey(d => d.ShevetId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Activity_Shevet");
             });
 
             modelBuilder.Entity<Cadet>(entity =>

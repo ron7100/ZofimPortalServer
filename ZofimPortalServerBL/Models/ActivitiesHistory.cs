@@ -15,9 +15,12 @@ namespace ZofimPortalServerBL.Models
         [Column("CadetID")]
         public int CadetId { get; set; }
         [Key]
-        [StringLength(50)]
-        public string Activity { get; set; }
+        [Column("ActivityID")]
+        public int ActivityId { get; set; }
 
+        [ForeignKey(nameof(ActivityId))]
+        [InverseProperty("ActivitiesHistories")]
+        public virtual Activity Activity { get; set; }
         [ForeignKey(nameof(CadetId))]
         [InverseProperty("ActivitiesHistories")]
         public virtual Cadet Cadet { get; set; }

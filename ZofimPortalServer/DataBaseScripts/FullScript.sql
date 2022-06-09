@@ -359,7 +359,41 @@ GO
 ALTER TABLE [dbo].[Cadet_Parent] CHECK CONSTRAINT [FK_Cadet_Parent_Parent]
 GO
 
-/****** Object:  Table [dbo].[ActivitiesHistory]    Script Date: 29/12/2021 12:54:12 ******/
+USE [ZofimPortalDB]
+GO
+
+/****** Object:  Table [dbo].[Activity]    Script Date: 09/06/2022 23:02:32 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Activity](
+	[Name] [nvarchar](50) NOT NULL,
+	[StartDate] [date] NOT NULL,
+	[EndDate] [date] NOT NULL,
+	[RelevantClass] [int] NOT NULL,
+	[Price] [int] NOT NULL,
+	[DiscountPercent] [int] NULL,
+	[IsOpen] [int] NOT NULL,
+	[ShevetID] [int] NOT NULL,
+	[ID] [int] NOT NULL,
+ CONSTRAINT [PK_Activity] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Activity]  WITH CHECK ADD  CONSTRAINT [FK_Activity_Shevet] FOREIGN KEY([ShevetID])
+REFERENCES [dbo].[Shevet] ([ID])
+GO
+
+ALTER TABLE [dbo].[Activity] CHECK CONSTRAINT [FK_Activity_Shevet]
+GO
+
+/****** Object:  Table [dbo].[ActivitiesHistory]    Script Date: 31/10/2021 08:48:13 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -368,11 +402,11 @@ GO
 
 CREATE TABLE [dbo].[ActivitiesHistory](
 	[CadetID] [int] NOT NULL,
-	[Activity] [nvarchar](50) NOT NULL,
- CONSTRAINT [PK_ActivitiesHistory] PRIMARY KEY CLUSTERED 
+	[ActivityID] [int] NOT NULL,
+	CONSTRAINT [PK_ActivitiesHistory] PRIMARY KEY CLUSTERED 
 (
 	[CadetID] ASC,
-	[Activity] ASC
+	[ActivityID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -383,6 +417,17 @@ GO
 
 ALTER TABLE [dbo].[ActivitiesHistory] CHECK CONSTRAINT [FK_ActivitiesHistory_Cadet]
 GO
+
+ALTER TABLE [dbo].[ActivitiesHistory]  WITH CHECK ADD  CONSTRAINT [FK_ActivitiesHistory_Activity] FOREIGN KEY([ActivityID])
+REFERENCES [dbo].[Activity] ([ID])
+GO
+
+ALTER TABLE [dbo].[ActivitiesHistory] CHECK CONSTRAINT [FK_ActivitiesHistory_Activity]
+GO
+
+USE [ZofimPortalDB]
+GO
+
 USE ZofimPortalDB
 INSERT INTO Hanhaga
 VALUES ('איילון', 20, 'מרכז', 1),

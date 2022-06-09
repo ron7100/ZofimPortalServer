@@ -13,6 +13,7 @@ namespace ZofimPortalServerBL.Models
     {
         public Shevet()
         {
+            Activities = new HashSet<Activity>();
             Cadets = new HashSet<Cadet>();
             Parents = new HashSet<Parent>();
             Workers = new HashSet<Worker>();
@@ -31,6 +32,8 @@ namespace ZofimPortalServerBL.Models
         [ForeignKey(nameof(HanhagaId))]
         [InverseProperty("Shevets")]
         public virtual Hanhaga Hanhaga { get; set; }
+        [InverseProperty(nameof(Activity.Shevet))]
+        public virtual ICollection<Activity> Activities { get; set; }
         [InverseProperty(nameof(Cadet.Shevet))]
         public virtual ICollection<Cadet> Cadets { get; set; }
         [InverseProperty(nameof(Parent.Shevet))]

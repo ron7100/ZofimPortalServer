@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZofimPortalServerBL", "Zofi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A290BBA4-94AB-43AD-A9C5-25CB04382993}"
 	ProjectSection(SolutionItems) = preProject
-		TextFile1.txt = TextFile1.txt
+		scaffolding.txt = scaffolding.txt
 	EndProjectSection
 EndProject
 Global
