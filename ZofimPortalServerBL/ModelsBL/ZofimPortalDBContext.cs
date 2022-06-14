@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using ZofimPortalServer.DTO;
+using ZofimPortalServerBL.DTO;
 
 namespace ZofimPortalServerBL.Models
 {
@@ -132,15 +133,47 @@ namespace ZofimPortalServerBL.Models
         {
             Activity a = Activities.Where(a => a.Id == ac.ID).FirstOrDefault();
             a.Name = ac.Name;
-            a.StartDate = ac.StartDate;
-            a.EndDate = ac.EndDate;
-            a.RelevantClass = ac.RelevantClass;
+            a.StartDate = ac.StartDate.ConvertToDateTime();
+            a.EndDate = ac.EndDate.ConvertToDateTime();
+            a.RelevantClass = GetRelevantClassInt(ac.RelevantClass);
             a.CadetsAmount = ac.CadetsAmount;
             a.DiscountPercent = ac.DiscountPercent;
             if (ac.IsOpen == "Green")
                 a.IsOpen = 1;
             else
                 a.IsOpen = 0;
+        }
+
+        private int GetRelevantClassInt(string relevantClass)
+        {
+
+            if (relevantClass == "כל השבט")
+                return 0;
+            else if (relevantClass == "צעירה")
+                return 1;
+            else if (relevantClass == "בוגרת")
+                return 2;
+            else if (relevantClass == "שכבג")
+                return 3;
+            else if (relevantClass == "ד")
+                return 4;
+            else if (relevantClass == "ה")
+                return 5;
+            else if (relevantClass == "ו")
+                return 6;
+            else if (relevantClass == "ז")
+                return 7;
+            else if (relevantClass == "ח")
+                return 8;
+            else if (relevantClass == "ט")
+                return 9;
+            else if (relevantClass == "י")
+                return 10;
+            else if (relevantClass == "יא")
+                return 11;
+            else if (relevantClass == "יב")
+                return 12;
+            return 13;
         }
 
         public Cadet AddCadet(Cadet c)
@@ -391,9 +424,9 @@ namespace ZofimPortalServerBL.Models
                 ActivityToShow ats = new ActivityToShow();
                 ats.ID = a.Id;
                 ats.Name = a.Name;
-                ats.StartDate = a.StartDate;
-                ats.EndDate = a.EndDate;
-                ats.RelevantClass = a.RelevantClass;
+                ats.StartDate = new Date(a.StartDate);
+                ats.EndDate = new Date(a.EndDate);
+                ats.RelevantClass = GetRelevantClassString(a.RelevantClass);
                 ats.CadetsAmount = a.CadetsAmount;
                 ats.Price = a.Price;
                 ats.DiscountPercent = a.DiscountPercent;
@@ -403,8 +436,8 @@ namespace ZofimPortalServerBL.Models
                     ats.IsOpen = "Green";
                 ats.ShevetID = a.ShevetId;
                 ats.Shevet = Shevets.Where(s => s.Id == a.ShevetId).FirstOrDefault().Name;
-                int hanhagaID = Shevets.Where(s => s.Id == a.ShevetId).FirstOrDefault().HanhagaId;
-                ats.Hanhaga = Hanhagas.Where(h => h.Id == hanhagaID).FirstOrDefault().Name;
+                ats.HanhagaID = Shevets.Where(s => s.Id == a.ShevetId).FirstOrDefault().HanhagaId;
+                ats.Hanhaga = Hanhagas.Where(h => h.Id == ats.HanhagaID).FirstOrDefault().Name;
                 toReturn.Add(ats);
             }
             return toReturn;
@@ -422,9 +455,9 @@ namespace ZofimPortalServerBL.Models
                     ActivityToShow ats = new ActivityToShow();
                     ats.ID = a.Id;
                     ats.Name = a.Name;
-                    ats.StartDate = a.StartDate;
-                    ats.EndDate = a.EndDate;
-                    ats.RelevantClass = a.RelevantClass;
+                    ats.StartDate = new Date(a.StartDate);
+                    ats.EndDate = new Date(a.EndDate);
+                    ats.RelevantClass = GetRelevantClassString(a.RelevantClass);
                     ats.CadetsAmount = a.CadetsAmount;
                     ats.Price = a.Price;
                     ats.DiscountPercent = a.DiscountPercent;
@@ -434,6 +467,7 @@ namespace ZofimPortalServerBL.Models
                         ats.IsOpen = "Green";
                     ats.ShevetID = a.ShevetId;
                     ats.Shevet = Shevets.Where(s => s.Id == a.ShevetId).FirstOrDefault().Name;
+                    ats.HanhagaID = hanhagaID;
                     ats.Hanhaga = Hanhagas.Where(h => h.Id == hanhagaID).FirstOrDefault().Name;
                     toReturn.Add(ats);
                 }
@@ -454,9 +488,9 @@ namespace ZofimPortalServerBL.Models
                     ActivityToShow ats = new ActivityToShow();
                     ats.ID = a.Id;
                     ats.Name = a.Name;
-                    ats.StartDate = a.StartDate;
-                    ats.EndDate = a.EndDate;
-                    ats.RelevantClass = a.RelevantClass;
+                    ats.StartDate = new Date(a.StartDate);
+                    ats.EndDate = new Date(a.EndDate);
+                    ats.RelevantClass = GetRelevantClassString(a.RelevantClass);
                     ats.CadetsAmount = a.CadetsAmount;
                     ats.Price = a.Price;
                     ats.DiscountPercent = a.DiscountPercent;
@@ -466,11 +500,34 @@ namespace ZofimPortalServerBL.Models
                         ats.IsOpen = "Green";
                     ats.ShevetID = a.ShevetId;
                     ats.Shevet = Shevets.Where(s => s.Id == a.ShevetId).FirstOrDefault().Name;
+                    ats.HanhagaID = hanhagaID;
                     ats.Hanhaga = Hanhagas.Where(h => h.Id == hanhagaID).FirstOrDefault().Name;
                     toReturn.Add(ats);
                 }
             }
             return toReturn;
+        }
+
+        private string GetRelevantClassString(int relevantClass)
+        {
+            switch(relevantClass)
+            {
+                case 0: return "כל השבט";
+                case 1: return "צעירה";
+                case 2: return "בוגרת";
+                case 3: return "שכבג";
+                case 4: return "ד";
+                case 5: return "ה";
+                case 6: return "ו";
+                case 7: return "ז";
+                case 8: return "ח";
+                case 9: return "ט";
+                case 10: return "י";
+                case 11: return "יא";
+                case 12: return "יב";
+                case 13: return "פעילים";
+            }
+            return " ";
         }
         #endregion
 
