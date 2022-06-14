@@ -114,6 +114,13 @@ namespace ZofimPortalServer.Controllers
             context.SaveHanhagaChanges(h);
         }
 
+        [Route("SaveActivityChanges")]
+        [HttpPost]
+        public void SaveActivityChanges([FromBody] ActivityToShow a)
+        {
+            context.SaveActivityChanges(a);
+        }
+
         [Route("AddCadet")]
         [HttpPost]
         public Cadet AddCadet([FromBody] Cadet c)
@@ -129,6 +136,21 @@ namespace ZofimPortalServer.Controllers
             context.ConnectCadetParent(cadetParent);
         }
 
+        [Route("AddActivity")]
+        [HttpPost]
+        public Activity AddActivity([FromBody] Activity a)
+        {
+            Activity activity = context.AddActivity(a);
+            return activity;
+        }
+
+        [Route("ConnectActivityCadet")]
+        [HttpPost]
+        public void ConnectActivityCadet([FromBody] ActivitiesHistory activitiesHistory)
+        {
+            context.ConnectActivityCadet(activitiesHistory);
+        }
+
         [Route("AddShevet")]
         [HttpPost]
         public Shevet AddShevet([FromBody] Shevet s)
@@ -136,6 +158,7 @@ namespace ZofimPortalServer.Controllers
             Shevet shevet = context.AddShevet(s);
             return shevet;
         }
+
         #endregion
 
         #region שליפת ID
@@ -158,6 +181,13 @@ namespace ZofimPortalServer.Controllers
         public int GetLastParentID()
         {
             return context.GetLastParentID();
+        }
+
+        [Route("GetLastActivityID")]
+        [HttpGet]
+        public int GetLastActivityID()
+        {
+            return context.GetLastActivityID();
         }
         #endregion
 
@@ -230,6 +260,27 @@ namespace ZofimPortalServer.Controllers
         public List<ShevetToShow> GetShevetsForHanhaga([FromQuery] string hanhaga)
         {
             return context.GetShevetsForHanhaga(hanhaga);
+        }
+
+        [Route("GetAllActivities")]
+        [HttpGet]
+        public List<ActivityToShow> GetAllActivities()
+        {
+            return context.GetAllActivities();
+        }
+
+        [Route("GetActivitiesForHanhaga")]
+        [HttpGet]
+        public List<ActivityToShow> GetActivitiesForHanhaga([FromQuery] string hanhaga)
+        {
+            return context.GetActivitiesForHanhaga(hanhaga);
+        }
+
+        [Route("GetActivitiesForShevet")]
+        [HttpGet]
+        public List<ActivityToShow> GetActivitiesForShevet([FromQuery] string shevet, [FromQuery] string hanhaga)
+        {
+            return context.GetActivitiesForShevet(shevet, hanhaga);
         }
         #endregion
 

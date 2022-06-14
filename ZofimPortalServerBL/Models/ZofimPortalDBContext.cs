@@ -62,6 +62,12 @@ namespace ZofimPortalServerBL.Models
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
+                entity.HasOne(d => d.Hanhaga)
+                    .WithMany(p => p.Activities)
+                    .HasForeignKey(d => d.HanhagaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Activity_Hanhaga");
+
                 entity.HasOne(d => d.Shevet)
                     .WithMany(p => p.Activities)
                     .HasForeignKey(d => d.ShevetId)

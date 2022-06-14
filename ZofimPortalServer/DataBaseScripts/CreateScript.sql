@@ -254,7 +254,7 @@ GO
 USE [ZofimPortalDB]
 GO
 
-/****** Object:  Table [dbo].[\]    Script Date: 31/10/2021 08:47:54 ******/
+/****** Object:  Table [dbo].[Parent]    Script Date: 31/10/2021 08:47:54 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -374,10 +374,12 @@ CREATE TABLE [dbo].[Activity](
 	[StartDate] [date] NOT NULL,
 	[EndDate] [date] NOT NULL,
 	[RelevantClass] [int] NOT NULL,
+	[CadetsAmount] [int] NOT NULL,
 	[Price] [int] NOT NULL,
-	[DiscountPercent] [int] NULL,
+	[DiscountPercent] [int] NOT NULL,
 	[IsOpen] [int] NOT NULL,
 	[ShevetID] [int] NOT NULL,
+	[HanhagaID] [int] NOT NULL,
 	[ID] [int] NOT NULL,
  CONSTRAINT [PK_Activity] PRIMARY KEY CLUSTERED 
 (

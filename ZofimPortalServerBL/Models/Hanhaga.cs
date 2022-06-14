@@ -13,6 +13,7 @@ namespace ZofimPortalServerBL.Models
     {
         public Hanhaga()
         {
+            Activities = new HashSet<Activity>();
             Shevets = new HashSet<Shevet>();
             Workers = new HashSet<Worker>();
         }
@@ -28,6 +29,8 @@ namespace ZofimPortalServerBL.Models
         [Column("ID")]
         public int Id { get; set; }
 
+        [InverseProperty(nameof(Activity.Hanhaga))]
+        public virtual ICollection<Activity> Activities { get; set; }
         [InverseProperty(nameof(Shevet.Hanhaga))]
         public virtual ICollection<Shevet> Shevets { get; set; }
         [InverseProperty(nameof(Worker.Hanhaga))]

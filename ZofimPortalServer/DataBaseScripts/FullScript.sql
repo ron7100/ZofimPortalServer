@@ -254,7 +254,7 @@ GO
 USE [ZofimPortalDB]
 GO
 
-/****** Object:  Table [dbo].[\]    Script Date: 31/10/2021 08:47:54 ******/
+/****** Object:  Table [dbo].[Parent]    Script Date: 31/10/2021 08:47:54 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -374,10 +374,12 @@ CREATE TABLE [dbo].[Activity](
 	[StartDate] [date] NOT NULL,
 	[EndDate] [date] NOT NULL,
 	[RelevantClass] [int] NOT NULL,
+	[CadetsAmount] [int] NOT NULL,
 	[Price] [int] NOT NULL,
 	[DiscountPercent] [int] NULL,
 	[IsOpen] [int] NOT NULL,
 	[ShevetID] [int] NOT NULL,
+	[HanhagaID] [int] NOT NULL,
 	[ID] [int] NOT NULL,
  CONSTRAINT [PK_Activity] PRIMARY KEY CLUSTERED 
 (
@@ -392,6 +394,13 @@ GO
 
 ALTER TABLE [dbo].[Activity] CHECK CONSTRAINT [FK_Activity_Shevet]
 GO
+
+ALTER TABLE [dbo].[Activity]  WITH CHECK ADD  CONSTRAINT [FK_Activity_Hanhaga] FOREIGN KEY([HanhagaID])
+REFERENCES [dbo].[Hanhaga] ([ID])
+GO
+
+ALTER TABLE [dbo].[Activity] CHECK CONSTRAINT [FK_Activity_Hanhaga]
+GO 
 
 /****** Object:  Table [dbo].[ActivitiesHistory]    Script Date: 31/10/2021 08:48:13 ******/
 SET ANSI_NULLS ON
@@ -753,7 +762,8 @@ VALUES ('אדמין', 1),
 	   ('רשגד ה', 17),
 	   ('רשגד ו', 18),
 	   ('רשגד ז', 19),
-	   ('רשגד ח', 20)
+	   ('רשגד ח', 20),
+	   ('פעיל', 21)
 
 INSERT INTO Parent
 VALUES (1, 1, 1),
@@ -813,3 +823,16 @@ VALUES (1, 1),
 	   (7, 7),
 	   (8, 8),
 	   (8, 9)
+
+INSERT INTO Activity
+VALUES ('טיול פסח ח', '2022-04-11', '2022-04-14', 8, 0, 600, 0, 0, 112, 8, 0),
+       ('טיול פסח ז', '2022-04-11', '2022-04-13', 7, 0, 500, 0, 0, 112, 8, 1),
+       ('מחנה קיץ ח', '2022-06-30', '2022-07-04', 8, 0, 800, 0, 0, 112, 8, 2),
+       ('מחנה קיץ ז', '2022-06-30', '2022-07-03', 7, 0, 700, 0, 0, 112, 8, 3)
+
+INSERT INTO ActivitiesHistory
+VALUES (9, 0),
+	   (9, 2),
+	   (7, 1),
+	   (7, 3)
+

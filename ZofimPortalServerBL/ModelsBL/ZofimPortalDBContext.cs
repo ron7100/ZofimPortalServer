@@ -128,6 +128,21 @@ namespace ZofimPortalServerBL.Models
             SaveChanges();
         }
 
+        public void SaveActivityChanges(ActivityToShow ac)
+        {
+            Activity a = Activities.Where(a => a.Id == ac.ID).FirstOrDefault();
+            a.Name = ac.Name;
+            a.StartDate = ac.StartDate;
+            a.EndDate = ac.EndDate;
+            a.RelevantClass = ac.RelevantClass;
+            a.CadetsAmount = ac.CadetsAmount;
+            a.DiscountPercent = ac.DiscountPercent;
+            if (ac.IsOpen == "Green")
+                a.IsOpen = 1;
+            else
+                a.IsOpen = 0;
+        }
+
         public Cadet AddCadet(Cadet c)
         {
             c.Id = GetLastCadetID() + 1;
@@ -139,6 +154,20 @@ namespace ZofimPortalServerBL.Models
         public void ConnectCadetParent(CadetParent cadetParent)
         {
             CadetParents.Add(cadetParent);
+            SaveChanges();
+        }
+
+        public Activity AddActivity(Activity a)
+        {
+            a.Id = GetLastActivityID() + 1;
+            Activities.Add(a);
+            SaveChanges();
+            return a;
+        }
+
+        public void ConnectActivityCadet(ActivitiesHistory activitiesHistory)
+        {
+            ActivitiesHistories.Add(activitiesHistory);
             SaveChanges();
         }
 
@@ -188,6 +217,14 @@ namespace ZofimPortalServerBL.Models
             if (sh == null)
                 return 0;
             return sh.Id;
+        }
+
+        public int GetLastActivityID()
+        {
+            Activity ac = Activities.Where(a => a.Id > 0).OrderByDescending(activity => activity.Id).FirstOrDefault();
+            if (ac == null)
+                return 0;
+            return ac.Id;
         }
         #endregion
 
@@ -340,6 +377,97 @@ namespace ZofimPortalServerBL.Models
                         Hanhaga = Hanhagas.Where(h => h.Id == hanhagaId).FirstOrDefault().Name
                     };
                     toReturn.Add(sts);
+                }
+            }
+            return toReturn;
+        }
+
+        public List<ActivityToShow> GetAllActivities()
+        {
+            List<ActivityToShow> toReturn = new List<ActivityToShow>();
+            List<Activity> activitiesEzer = new List<Activity>(Activities);
+            foreach(Activity a in activitiesEzer)
+            {
+                ActivityToShow ats = new ActivityToShow();
+                ats.ID = a.Id;
+                ats.Name = a.Name;
+                ats.StartDate = a.StartDate;
+                ats.EndDate = a.EndDate;
+                ats.RelevantClass = a.RelevantClass;
+                ats.CadetsAmount = a.CadetsAmount;
+                ats.Price = a.Price;
+                ats.DiscountPercent = a.DiscountPercent;
+                if (a.IsOpen == 0)
+                    ats.IsOpen = "Red";
+                else
+                    ats.IsOpen = "Green";
+                ats.ShevetID = a.ShevetId;
+                ats.Shevet = Shevets.Where(s => s.Id == a.ShevetId).FirstOrDefault().Name;
+                int hanhagaID = Shevets.Where(s => s.Id == a.ShevetId).FirstOrDefault().HanhagaId;
+                ats.Hanhaga = Hanhagas.Where(h => h.Id == hanhagaID).FirstOrDefault().Name;
+                toReturn.Add(ats);
+            }
+            return toReturn;
+        }
+
+        public List<ActivityToShow> GetActivitiesForHanhaga(string hanhaga)
+        {
+            int hanhagaID = Hanhagas.Where(h => h.Name == hanhaga).FirstOrDefault().Id;
+            List<ActivityToShow> toReturn = new List<ActivityToShow>();
+            List<Activity> activitiesEzer = new List<Activity>(Activities);
+            foreach (Activity a in activitiesEzer)
+            {
+                if (a.HanhagaId == hanhagaID)
+                {
+                    ActivityToShow ats = new ActivityToShow();
+                    ats.ID = a.Id;
+                    ats.Name = a.Name;
+                    ats.StartDate = a.StartDate;
+                    ats.EndDate = a.EndDate;
+                    ats.RelevantClass = a.RelevantClass;
+                    ats.CadetsAmount = a.CadetsAmount;
+                    ats.Price = a.Price;
+                    ats.DiscountPercent = a.DiscountPercent;
+                    if (a.IsOpen == 0)
+                        ats.IsOpen = "Red";
+                    else
+                        ats.IsOpen = "Green";
+                    ats.ShevetID = a.ShevetId;
+                    ats.Shevet = Shevets.Where(s => s.Id == a.ShevetId).FirstOrDefault().Name;
+                    ats.Hanhaga = Hanhagas.Where(h => h.Id == hanhagaID).FirstOrDefault().Name;
+                    toReturn.Add(ats);
+                }
+            }
+            return toReturn;
+        }
+
+        public List<ActivityToShow> GetActivitiesForShevet(string shevet, string hanhaga)
+        {
+            int hanhagaID = Hanhagas.Where(h => h.Name == hanhaga).FirstOrDefault().Id;
+            int shevetID = Shevets.Where(s => s.Name == shevet && s.HanhagaId == hanhagaID).FirstOrDefault().Id;
+            List<ActivityToShow> toReturn = new List<ActivityToShow>();
+            List<Activity> activitiesEzer = new List<Activity>(Activities);
+            foreach (Activity a in activitiesEzer)
+            {
+                if (a.ShevetId == shevetID)
+                {
+                    ActivityToShow ats = new ActivityToShow();
+                    ats.ID = a.Id;
+                    ats.Name = a.Name;
+                    ats.StartDate = a.StartDate;
+                    ats.EndDate = a.EndDate;
+                    ats.RelevantClass = a.RelevantClass;
+                    ats.CadetsAmount = a.CadetsAmount;
+                    ats.Price = a.Price;
+                    ats.DiscountPercent = a.DiscountPercent;
+                    if (a.IsOpen == 0)
+                        ats.IsOpen = "Red";
+                    else
+                        ats.IsOpen = "Green";
+                    ats.ShevetID = a.ShevetId;
+                    ats.Shevet = Shevets.Where(s => s.Id == a.ShevetId).FirstOrDefault().Name;
+                    ats.Hanhaga = Hanhagas.Where(h => h.Id == hanhagaID).FirstOrDefault().Name;
+                    toReturn.Add(ats);
                 }
             }
             return toReturn;

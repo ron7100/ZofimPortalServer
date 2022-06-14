@@ -24,15 +24,21 @@ namespace ZofimPortalServerBL.Models
         [Column(TypeName = "date")]
         public DateTime EndDate { get; set; }
         public int RelevantClass { get; set; }
+        public int CadetsAmount { get; set; }
         public int Price { get; set; }
         public int? DiscountPercent { get; set; }
         public int IsOpen { get; set; }
         [Column("ShevetID")]
         public int ShevetId { get; set; }
+        [Column("HanhagaID")]
+        public int HanhagaId { get; set; }
         [Key]
         [Column("ID")]
         public int Id { get; set; }
 
+        [ForeignKey(nameof(HanhagaId))]
+        [InverseProperty("Activities")]
+        public virtual Hanhaga Hanhaga { get; set; }
         [ForeignKey(nameof(ShevetId))]
         [InverseProperty("Activities")]
         public virtual Shevet Shevet { get; set; }
