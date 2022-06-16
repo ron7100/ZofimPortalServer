@@ -142,6 +142,9 @@ namespace ZofimPortalServerBL.Models
                 a.IsOpen = 1;
             else
                 a.IsOpen = 0;
+            a.ShevetId = ac.ShevetID;
+            a.HanhagaId = ac.HanhagaID;
+            SaveChanges();
         }
 
         private int GetRelevantClassInt(string relevantClass)
@@ -568,6 +571,22 @@ namespace ZofimPortalServerBL.Models
             return Hanhagas.Where(h => h.Id == pHanhagaId).FirstOrDefault().Name;
         }
 
+        public int GetHanhagaID(int id)
+        {
+            Worker w = Workers.Where(w => w.UserId == id).FirstOrDefault();
+            Parent p = Parents.Where(p => p.UserId == id).FirstOrDefault();
+            if (w != null)
+            {
+                int? wHanhagaId = w.HanhagaId;
+                if (wHanhagaId != null)
+                    return Hanhagas.Where(h => h.Id == wHanhagaId).FirstOrDefault().Id;
+                return -2;
+            }
+            int? pShevetId = p.ShevetId;
+            int? pHanhagaId = Shevets.Where(s => s.Id == pShevetId).FirstOrDefault().HanhagaId;
+            return Hanhagas.Where(h => h.Id == pHanhagaId).FirstOrDefault().Id;
+        }
+
         public string GetShevet(int id)
         {
             Worker w = Workers.Where(w => w.UserId == id).FirstOrDefault();
@@ -581,6 +600,21 @@ namespace ZofimPortalServerBL.Models
             }
             int? pShevetId = p.ShevetId;
             return Shevets.Where(h => h.Id == pShevetId).FirstOrDefault().Name;
+        }
+
+        public int GetShevetID(int id)
+        {
+            Worker w = Workers.Where(w => w.UserId == id).FirstOrDefault();
+            Parent p = Parents.Where(p => p.UserId == id).FirstOrDefault();
+            if (w != null)
+            {
+                int? wShevetId = w.ShevetId;
+                if (wShevetId != null)
+                    return Shevets.Where(h => h.Id == wShevetId).FirstOrDefault().Id;
+                return -2;
+            }
+            int? pShevetId = p.ShevetId;
+            return Shevets.Where(h => h.Id == pShevetId).FirstOrDefault().Id;
         }
         #endregion
     }         

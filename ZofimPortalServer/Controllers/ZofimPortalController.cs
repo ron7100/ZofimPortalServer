@@ -302,11 +302,25 @@ namespace ZofimPortalServer.Controllers
             return context.GetHanhaga(id);
         }
 
+        [Route("GetHanhagaID")]
+        [HttpGet]
+        public int GetHanhagaID([FromQuery] int id)
+        {
+            return context.GetHanhagaID(id);
+        }
+
         [Route("GetShevet")]
         [HttpGet]
         public string GetShevet([FromQuery] int id)
         {
             return context.GetShevet(id);
+        }
+
+        [Route("GetShevetID")]
+        [HttpGet]
+        public int GetShevetID([FromQuery] int id)
+        {
+            return context.GetShevetID(id);
         }
         #endregion
     }
