@@ -138,7 +138,7 @@ namespace ZofimPortalServer.Controllers
 
         [Route("AddActivity")]
         [HttpPost]
-        public Activity AddActivity([FromBody] Activity a)
+        public Activity AddActivity([FromBody] ActivityToShow a)
         {
             Activity activity = context.AddActivity(a);
             return activity;
@@ -281,6 +281,20 @@ namespace ZofimPortalServer.Controllers
         public List<ActivityToShow> GetActivitiesForShevet([FromQuery] string shevet, [FromQuery] string hanhaga)
         {
             return context.GetActivitiesForShevet(shevet, hanhaga);
+        }
+
+        [Route("GetCadetsForActivity")]
+        [HttpGet]
+        public List<CadetToShow> GetCadetsForActivity([FromQuery] int activityID)
+        {
+            return context.GetCadetsForActivity(activityID);
+        }
+
+        [Route("GetActivitiesForCadet")]
+        [HttpGet]
+        public List<ActivityToShow> GetActivitiesForCadet([FromQuery] int cadetID)
+        {
+            return context.GetActivitiesForCadet(cadetID);
         }
         #endregion
 

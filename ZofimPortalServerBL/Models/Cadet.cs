@@ -26,6 +26,10 @@ namespace ZofimPortalServerBL.Models
         [StringLength(50)]
         public string LName { get; set; }
         [Required]
+        [Column("class")]
+        [StringLength(50)]
+        public string Class { get; set; }
+        [Required]
         [Column("PersonalID")]
         [StringLength(50)]
         public string PersonalId { get; set; }

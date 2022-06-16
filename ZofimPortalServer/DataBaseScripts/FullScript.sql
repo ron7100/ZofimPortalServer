@@ -299,6 +299,7 @@ GO
 CREATE TABLE [dbo].[Cadet](
 	[fName] [nvarchar](50) NOT NULL,
 	[lName] [nvarchar](50) NOT NULL,
+	[class] [nvarchar](50) NOT NULL,
 	[PersonalID] [nvarchar](50) NOT NULL,
 	[ShevetID] [int] NOT NULL,
 	[RoleID] [int] NOT NULL,
@@ -803,15 +804,15 @@ VALUES (1, 3, 1, 11, 3),
 	   (149, 3, 11, 29, 21)
 
 INSERT INTO Cadet
-VALUES ('aaa', 'AAA', '100000000', 1, 4, 1),
-	   ('ccc', 'CCC', '100000001', 231, 5, 2),
-	   ('ddd', 'DDD', '100000002', 4, 10, 3),
-	   ('eee', 'EEE', '100000003', 7, 16, 4),
-	   ('fff', 'FFF', '100000004', 19, 15, 5),
-	   ('ggg', 'GGG', '100000005', 204, 17, 6),
-	   ('hhh', 'HHH', '100000006', 82, 7, 7),
-	   ('iii', 'III', '100000007', 205, 9, 8),
-	   ('jjj', 'JJJ', '100000008', 205, 20, 9)
+VALUES ('aaa', 'AAA', 'ד', '100000000', 1, 4, 1),
+	   ('ccc', 'CCC', 'ה', '100000001', 231, 5, 2),
+	   ('ddd', 'DDD', 'י', '100000002', 4, 10, 3),
+	   ('eee', 'EEE', 'יא', '100000003', 7, 16, 4),
+	   ('fff', 'FFF', 'יב', '100000004', 19, 15, 5),
+	   ('ggg', 'GGG', 'יא', '100000005', 204, 17, 6),
+	   ('hhh', 'HHH', 'ז', '100000006', 82, 7, 7),
+	   ('iii', 'III', 'ט', '100000007', 205, 9, 8),
+	   ('jjj', 'JJJ', 'יב', '100000008', 205, 20, 9)
 
 INSERT INTO Cadet_Parent
 VALUES (1, 1),

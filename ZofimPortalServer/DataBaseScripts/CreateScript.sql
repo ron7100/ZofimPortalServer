@@ -299,6 +299,7 @@ GO
 CREATE TABLE [dbo].[Cadet](
 	[fName] [nvarchar](50) NOT NULL,
 	[lName] [nvarchar](50) NOT NULL,
+	[class] [nvarchar](50) NOT NULL,
 	[PersonalID] [nvarchar](50) NOT NULL,
 	[ShevetID] [int] NOT NULL,
 	[RoleID] [int] NOT NULL,

@@ -96,6 +96,7 @@ namespace ZofimPortalServerBL.Models
             Cadet c = Cadets.Where(c => c.Id == ca.ID).FirstOrDefault();
             c.FName = ca.FirstName;
             c.LName = ca.LastName;
+            c.Class = ca.Class;
             c.PersonalId = ca.PersonalID;
             c.RoleId = Roles.Where(r => r.RoleName == ca.Role).FirstOrDefault().Id;
             Hanhaga hanhaga = Hanhagas.Where(h => h.Name == ca.Hanhaga).FirstOrDefault();
@@ -193,9 +194,25 @@ namespace ZofimPortalServerBL.Models
             SaveChanges();
         }
 
-        public Activity AddActivity(Activity a)
+        public Activity AddActivity(ActivityToShow ats)
         {
-            a.Id = GetLastActivityID() + 1;
+            Activity a = new Activity
+            {
+                Name = ats.Name,
+                StartDate = ats.StartDate.ConvertToDateTime(),
+                EndDate = ats.EndDate.ConvertToDateTime(),
+                RelevantClass = GetRelevantClassInt(ats.RelevantClass),
+                CadetsAmount = ats.CadetsAmount,
+                Price = ats.Price,
+                DiscountPercent = ats.DiscountPercent,
+                ShevetId = ats.ShevetID,
+                HanhagaId = ats.HanhagaID,
+                Id = GetLastActivityID() + 1
+            };
+            if (ats.IsOpen == "Green")
+                a.IsOpen = 1;
+            else
+                a.IsOpen = 0;
             Activities.Add(a);
             SaveChanges();
             return a;
@@ -340,6 +357,7 @@ namespace ZofimPortalServerBL.Models
                     ID = cadet.Id,
                     FirstName = cadet.FName,
                     LastName = cadet.LName,
+                    Class = cadet.Class,
                     PersonalID = cadet.PersonalId
                 };
                 int shevetID = cadet.ShevetId;
@@ -531,6 +549,65 @@ namespace ZofimPortalServerBL.Models
                 case 13: return "פעילים";
             }
             return " ";
+        }
+
+        public List<CadetToShow> GetCadetsForActivity(int activityID)
+        {
+            List<ActivitiesHistory> activitiesHistories = new List<ActivitiesHistory>(ActivitiesHistories);
+            List<CadetToShow> toReturn = new List<CadetToShow>();
+            foreach(ActivitiesHistory ah in activitiesHistories)
+            {
+                if (ah.ActivityId == activityID)
+                {
+                    CadetToShow cts = new CadetToShow();
+                    Cadet cadet = Cadets.Where(c => c.Id == ah.CadetId).FirstOrDefault();
+                    cts.ID = cadet.Id;
+                    cts.FirstName = cadet.FName;
+                    cts.LastName = cadet.LName;
+                    cts.Class = cadet.Class;
+                    cts.PersonalID = cadet.PersonalId;
+                    Shevet shevet = Shevets.Where(s => s.Id == cadet.ShevetId).FirstOrDefault();
+                    cts.Shevet = shevet.Name;
+                    Hanhaga hanhaga = Hanhagas.Where(h => h.Id == shevet.HanhagaId).FirstOrDefault();
+                    cts.Hanhaga = hanhaga.Name;
+                    Role role = Roles.Where(r => r.Id == cadet.RoleId).FirstOrDefault();
+                    cts.Role = role.RoleName;
+                    toReturn.Add(cts);
+                }
+            }
+            return toReturn;
+        }
+
+        public List<ActivityToShow> GetActivitiesForCadet(int cadetID)
+        {
+            List<ActivitiesHistory> activitiesHistories = new List<ActivitiesHistory>(ActivitiesHistories);
+            List<ActivityToShow> toReturn = new List<ActivityToShow>();
+            foreach(ActivitiesHistory ah in activitiesHistories)
+            {
+                if(ah.CadetId==cadetID)
+                {
+                    ActivityToShow ats = new ActivityToShow();
+                    Activity activity = Activities.Where(a => a.Id == ah.ActivityId).FirstOrDefault();
+                    ats.Name = activity.Name;
+                    ats.StartDate = new Date(activity.StartDate);
+                    ats.EndDate = new Date(activity.EndDate);
+                    ats.RelevantClass = GetRelevantClassString(activity.RelevantClass);
+                    ats.CadetsAmount = activity.CadetsAmount;
+                    ats.Price = activity.Price;
+                    ats.DiscountPercent = activity.DiscountPercent;
+                    if (activity.IsOpen == 1)
+                        ats.IsOpen = "Green";
+                    else
+                        ats.IsOpen = "Red";
+                    ats.ShevetID = activity.ShevetId;
+                    ats.Shevet = Shevets.Where(s => s.Id == ats.ShevetID).FirstOrDefault().Name;
+                    ats.HanhagaID = activity.HanhagaId;
+                    ats.Hanhaga = Hanhagas.Where(h => h.Id == ats.HanhagaID).FirstOrDefault().Name;
+                    ats.ID = activity.Id;
+                    toReturn.Add(ats);
+                }
+            }
+            return toReturn;
         }
         #endregion
 
