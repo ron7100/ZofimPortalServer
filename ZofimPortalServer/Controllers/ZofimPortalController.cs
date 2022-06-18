@@ -144,11 +144,12 @@ namespace ZofimPortalServer.Controllers
             return activity;
         }
 
-        [Route("ConnectActivityCadet")]
+        [Route("SignUpToActivities")]
         [HttpPost]
-        public void ConnectActivityCadet([FromBody] ActivitiesHistory activitiesHistory)
+        public bool SignUpToActivities([FromBody] List<ActivitiesHistory> activitiesHistories)
         {
-            context.ConnectActivityCadet(activitiesHistory);
+            context.SignUpToActivities(activitiesHistories);
+            return true;
         }
 
         [Route("AddShevet")]
@@ -296,6 +297,13 @@ namespace ZofimPortalServer.Controllers
         {
             return context.GetActivitiesForCadet(cadetID);
         }
+
+        [Route("GetCadetsForParent")]
+        [HttpGet]
+        public List<CadetToShow> GetCadetsForParent([FromQuery] int parentID)
+        {
+            return context.GetCadetsForParent(parentID);
+        }
         #endregion
 
         #region קבלת נתוני משתמש
@@ -335,6 +343,34 @@ namespace ZofimPortalServer.Controllers
         public int GetShevetID([FromQuery] int id)
         {
             return context.GetShevetID(id);
+        }
+
+        [Route("GetRole")]
+        [HttpGet]
+        public string GetRole([FromQuery] int cadetId)
+        {
+            return context.GetRole(cadetId);
+        }
+
+        [Route("IsInRelevantClass")]
+        [HttpGet]
+        public bool IsInRelevantClass([FromQuery] string relevantClass, [FromQuery] string @class, [FromQuery] string role)
+        {
+            return context.IsInRelevantClass(relevantClass, @class, role);
+        }
+
+        [Route("IsRegistered")]
+        [HttpGet]
+        public bool IsRegistered(int cadetID, int activityID)
+        {
+            return context.IsRegistered(cadetID, activityID);
+        }
+
+        [Route("GetParent")]
+        [HttpGet]
+        public Parent GetParent([FromQuery] int id)
+        {
+            return context.GetParent(id);
         }
         #endregion
     }

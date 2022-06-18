@@ -218,9 +218,16 @@ namespace ZofimPortalServerBL.Models
             return a;
         }
 
-        public void ConnectActivityCadet(ActivitiesHistory activitiesHistory)
+        public void SignUpToActivities(List<ActivitiesHistory> activitiesHistories)
         {
-            ActivitiesHistories.Add(activitiesHistory);
+            foreach(ActivitiesHistory ah in activitiesHistories)
+            {
+                ActivitiesHistories.Add(ah);
+                Activity activity = Activities.Where(a => a.Id == ah.ActivityId).FirstOrDefault();
+                activity.CadetsAmount++;
+                if (activity.Name == "מיסי חבר")
+                    Shevets.Where(s => s.Id == activity.ShevetId).FirstOrDefault().MembersAmount++;
+            }
             SaveChanges();
         }
 
@@ -418,18 +425,17 @@ namespace ZofimPortalServerBL.Models
         public List<ShevetToShow> GetShevetsForHanhaga(string hanhaga)
         {
             int hanhagaId = Hanhagas.Where(h => h.Name == hanhaga).FirstOrDefault().Id;
+            string hanhagaName = Hanhagas.Where(h => h.Id == hanhagaId).FirstOrDefault().Name;
             List<ShevetToShow> toReturn = new List<ShevetToShow>();
             foreach(Shevet s in Shevets)
             {
                 if (s.HanhagaId == hanhagaId)
                 {
-                    ShevetToShow sts = new ShevetToShow
-                    {
-                        ID = s.Id,
-                        Name = s.Name,
-                        MembersAmount = s.MembersAmount,
-                        Hanhaga = Hanhagas.Where(h => h.Id == hanhagaId).FirstOrDefault().Name
-                    };
+                    ShevetToShow sts = new ShevetToShow();
+                    sts.ID = s.Id;
+                    sts.Name = s.Name;
+                    sts.MembersAmount = s.MembersAmount;
+                    sts.Hanhaga = hanhagaName;
                     toReturn.Add(sts);
                 }
             }
@@ -609,6 +615,31 @@ namespace ZofimPortalServerBL.Models
             }
             return toReturn;
         }
+
+        public List<CadetToShow> GetCadetsForParent(int parentID)
+        {
+            List<CadetToShow> cadets = GetAllCadets();
+            List<CadetToShow> toReturn = new List<CadetToShow>();
+            foreach (CadetToShow c in cadets)
+            {
+                if (IsChildOf(c.ID, parentID))
+                {
+                    toReturn.Add(c);
+                }
+            }
+            return toReturn;
+        }
+
+        private bool IsChildOf(int cadetID, int parentID)
+        {
+            List<CadetParent> cadetParents = new List<CadetParent>(CadetParents);
+            foreach(CadetParent cp in cadetParents)
+            {
+                if (cp.CadetId == cadetID && cp.ParentId == parentID)
+                    return true;
+            }
+            return false;
+        }
         #endregion
 
         #region קבלת נתוני משתמש
@@ -634,16 +665,18 @@ namespace ZofimPortalServerBL.Models
 
         public string GetHanhaga(int id)
         {
-            Worker w = Workers.Where(w => w.UserId == id).FirstOrDefault();
-            Parent p = Parents.Where(p => p.UserId == id).FirstOrDefault();
-            if (w != null)
+            Worker worker = Workers.Where(w => w.UserId == id).FirstOrDefault();
+            Parent parent = Parents.Where(p => p.UserId == id).FirstOrDefault();
+            if (worker != null)
             {
-                int? wHanhagaId = w.HanhagaId;
+                int? wHanhagaId = worker.HanhagaId;
                 if (wHanhagaId != null)
                     return Hanhagas.Where(h => h.Id == wHanhagaId).FirstOrDefault().Name;
                 return "";
             }
-            int? pShevetId = p.ShevetId;
+            if (parent == null)
+                return "";
+            int? pShevetId = parent.ShevetId;
             int? pHanhagaId = Shevets.Where(s => s.Id == pShevetId).FirstOrDefault().HanhagaId;
             return Hanhagas.Where(h => h.Id == pHanhagaId).FirstOrDefault().Name;
         }
@@ -692,6 +725,61 @@ namespace ZofimPortalServerBL.Models
             }
             int? pShevetId = p.ShevetId;
             return Shevets.Where(h => h.Id == pShevetId).FirstOrDefault().Id;
+        }
+
+        public string GetRole(int cadetId)
+        {
+            int roleId = Cadets.Where(c => c.Id == cadetId).FirstOrDefault().Id;
+            return Roles.Where(r => r.Id == roleId).FirstOrDefault().RoleName;
+        }
+
+        public bool IsInRelevantClass(string relevantClass, string @class, string role)
+        {
+            string roleClass = GetClassForRole(role);
+            if (relevantClass == "כל השבט")
+                return true;
+            if (relevantClass == @class || relevantClass == roleClass)
+                return true;
+            if (relevantClass == "צעירה")
+                return @class == "ד" || roleClass == "ד" || @class == "ה" || roleClass == "ה";
+            if (relevantClass == "בוגרת")
+                return @class == "ו" || roleClass == "ו" || @class == "ז" || roleClass == "ז" || @class == "ח" || roleClass == "ח";
+            if (relevantClass == "שכבג")
+                return @class == "י" || @class == "יא" || @class == "יב";
+            return false;
+        }
+
+        public bool IsRegistered(int cadetID, int activityID)
+        {
+            List<CadetToShow> cadetsForActivity = GetCadetsForActivity(activityID);
+            foreach(CadetToShow c in cadetsForActivity)
+            {
+                if (c.ID == cadetID)
+                    return true;
+            }
+            return false;
+        }
+
+        public Parent GetParent(int id)
+        {
+            return Parents.Where(p => p.UserId == id).FirstOrDefault();
+        }
+
+        private string GetClassForRole(string role)
+        {
+            if (role == "חניך ד" || role == "מדריך ד" || role == "רשגד ד")
+                return "ד";
+            if (role == "חניך ה" || role == "מדריך ה" || role == "רשגד ה")
+                return "ה";
+            if (role == "חניך ו" || role == "מדריך ו" || role == "רשגד ו")
+                return "ו";
+            if (role == "חניך ז" || role == "מדריך ז" || role == "רשגד ז")
+                return "ז";
+            if (role == "חניך ח" || role == "מדריך ח" || role == "רשגד ח")
+                return "ח";
+            if (role == "חניך ט" || role == "מדריך ט")
+                return "ט";
+            return "פעילים";
         }
         #endregion
     }         
